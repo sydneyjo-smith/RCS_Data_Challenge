@@ -60,6 +60,25 @@ print(fev1_plot)
 # Activity 7a - Showing further structure
 
 # Determine a way to highlight which observations belong to the same individual in your plot
+ 
+# Matthew 
+
+fev1_plot_2 <- ggplot(data = fev1_sampled, 
+                      aes(x = FEV1, y = age, group = id, color = as.factor(id))) +
+  geom_point(size = 2) +  # Scatter points with size for visibility
+  labs(
+    x = "FEV1 (L)", 
+    y = "Age (years)", 
+    title = "Scatter Plot of FEV1 vs. Age",
+    color = "Individual ID"
+  ) +
+  theme_minimal() 
+
+# Display the plot
+print(fev1_plot_2)
+
+
+
 
 
 # Activity 7b - How many observations per individual?
