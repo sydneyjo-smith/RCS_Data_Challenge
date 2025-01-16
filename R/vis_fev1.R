@@ -12,7 +12,8 @@ library(tidyverse)
 library(GGally)
 
 # read the data in
-fev1 <- read_csv("../data/fev1.csv", col_types = list('id' = 'f'))
+
+fev1 <- read_csv("data/fev1.csv", col_types = list('id' = 'f'))
 
 # sample the data so that we have 20 patients with more than 6 observations
 
@@ -104,8 +105,15 @@ print(id_plot)
 
 # Activity 7c - Incorporating height
 
+# Catherine
+
 # Make a plot that shows both FEV1 and age but also includes height
 
+ggplot(fev1_sampled, aes(x = age, y = FEV1)) +
+  geom_point(aes(color = height), size = 2.5, alpha = 0.6) +
+  scale_color_gradient(low = "red", high = "orange") +
+  labs(x = "Age (years)", y = "FEV1 (L)", title = "FEV1 vs age with Height") +
+  theme_minimal()
 
 # Activity 7d - skimr
 #sydney woohoooo
