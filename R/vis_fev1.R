@@ -6,7 +6,10 @@
 
 # Exploratory Data Analysis of FEV1 data
 
+install.packages("GGally")
+
 library(tidyverse)
+library(GGally)
 
 # read the data in
 fev1 <- read_csv("../data/fev1.csv", col_types = list('id' = 'f'))
@@ -78,10 +81,12 @@ print(fev1_plot)
 # You'll need to install skimr if you don't already have it
 
 
-# Activity 7e - GGally
+# Activity 7e - GGally MATT R
 
 # Generate a pairs plot with GGally::ggpairs(), for all columns except id
 # You'll need to install GGally if you don't already have it
+
+ggpairs(fev1_sampled, columns= 2:4 )
 
 # Activity 7f - Accounting for repeat measurement
 
