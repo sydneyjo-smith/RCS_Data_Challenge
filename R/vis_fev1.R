@@ -28,10 +28,11 @@ fev1_sampled
 # (yes, this isn't strictly correct because there's repeated measures)
 
 
+
 # Build a plot that shows the relationship between FEV1 and age
 
 fev1_plot <- ggplot(data = fev1_sampled, 
-                    aes(x = ..., y = ...)) +
+                    aes(x = FEV1, y = age)) +
     geom_point()
 
 fev1_plot
