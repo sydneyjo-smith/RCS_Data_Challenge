@@ -43,6 +43,17 @@ fev1_plot
 
 # Add a smooth line of best fit to the plot. 
 
+fev1_plot <- ggplot(data = fev1_sampled, 
+                    aes(x = FEV1, y = age)) +
+  geom_point(color = "blue") +                      
+  labs(x = "FEV1 (L)",                             
+       y = "Age (years)",                          
+       title = "Scatter Plot of FEV1 vs. Age") +    
+  theme_minimal() +                                
+  geom_smooth(method = "lm", se = FALSE, color = "red")  # Add a linear smooth line of best fit
+
+# Display the plot
+print(fev1_plot)
 
 # Activity 7
 
