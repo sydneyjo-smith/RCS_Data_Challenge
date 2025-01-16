@@ -6,7 +6,10 @@
 
 # Exploratory Data Analysis of FEV1 data
 
+install.packages("GGally")
+
 library(tidyverse)
+library(GGally)
 
 # read the data in
 fev1 <- read_csv("../data/fev1.csv", col_types = list('id' = 'f'))
@@ -60,11 +63,43 @@ print(fev1_plot)
 # Activity 7a - Showing further structure
 
 # Determine a way to highlight which observations belong to the same individual in your plot
+ 
+# Matthew 
+
+fev1_plot_2 <- ggplot(data = fev1_sampled, 
+                      aes(x = FEV1, y = age, group = id, color = as.factor(id))) +
+  geom_point(size = 2) +  # Scatter points with size for visibility
+  labs(
+    x = "FEV1 (L)", 
+    y = "Age (years)", 
+    title = "Scatter Plot of FEV1 vs. Age",
+    color = "Individual ID"
+  ) +
+  theme_minimal() 
+
+# Display the plot
+print(fev1_plot_2)
+
+
+
 
 
 # Activity 7b - How many observations per individual?
 
+# Catherine
+
 # Count the number of times that each `id` is measured and make a bar plot 
+
+id_count <- fev1_sampled %>%
+  group_by(id) %>%
+  summarise(count = n())
+
+id_plot <- ggplot(id_count, aes(x = as.factor(id), y = count)) +
+  geom_bar(stat = "identity", fill = "darkmagenta") +
+  labs(x = "Individual ID", y = "Number of Observations", title = "Number of observations per individual") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+print(id_plot)
 
 
 # Activity 7c - Incorporating height
@@ -86,14 +121,15 @@ fev1 |>
 
 # Heads up- You'll need to install skimr if you don't already have it
 
-# Activity 7e - GGally
+# Activity 7e - GGally MATT R
 
 # Generate a pairs plot with GGally::ggpairs(), for all columns except id
 # You'll need to install GGally if you don't already have it
+
+ggpairs(fev1_sampled, columns= 2:4 )
 
 # Activity 7f - Accounting for repeat measurement
 
 # Build a regression model to look at how FEV1 varies with age, accounting for the
 # structure by including a random effect mean for each id and a spline curve for
 # the effect of age
-
