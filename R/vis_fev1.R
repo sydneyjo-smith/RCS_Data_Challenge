@@ -73,10 +73,18 @@ print(fev1_plot)
 
 
 # Activity 7d - skimr
-
+#sydney woohoooo
 # Use skimr::skim() to generate a summary table of the data.
-# You'll need to install skimr if you don't already have it
+install.packages("skimr")
+??skim
+skimr::skim(fev1)
+# skim grouped by age group 
+fev1 |>
+  mutate(age_group = cut(age, breaks = seq(0, 20, by = 2))) |>
+  group_by(age_group) |>
+  skimr::skim()
 
+# Heads up- You'll need to install skimr if you don't already have it
 
 # Activity 7e - GGally
 
