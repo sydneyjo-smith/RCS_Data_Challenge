@@ -64,7 +64,20 @@ print(fev1_plot)
 
 # Activity 7b - How many observations per individual?
 
+# Catherine
+
 # Count the number of times that each `id` is measured and make a bar plot 
+
+id_count <- fev1_sampled %>%
+  group_by(id) %>%
+  summarise(count = n())
+
+id_plot <- ggplot(id_count, aes(x = as.factor(id), y = count)) +
+  geom_bar(stat = "identity", fill = "darkmagenta") +
+  labs(x = "Individual ID", y = "Number of Observations", title = "Number of observations per individual") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+print(id_plot)
 
 
 # Activity 7c - Incorporating height
@@ -88,4 +101,3 @@ print(fev1_plot)
 # Build a regression model to look at how FEV1 varies with age, accounting for the
 # structure by including a random effect mean for each id and a spline curve for
 # the effect of age
-
