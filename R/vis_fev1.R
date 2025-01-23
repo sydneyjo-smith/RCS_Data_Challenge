@@ -111,7 +111,7 @@ print(id_plot)
 
 ggplot(fev1_sampled, aes(x = age, y = FEV1)) +
   geom_point(aes(color = height), size = 2.5, alpha = 0.6) +
-  scale_color_gradient(low = "red", high = "orange") +
+  scale_color_gradient(low = "darkred", high = "orange") +
   labs(x = "Age (years)", y = "FEV1 (L)", title = "FEV1 vs age with Height") +
   theme_minimal()
 
