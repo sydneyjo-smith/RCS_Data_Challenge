@@ -3,7 +3,7 @@ library(dplyr)
 library(readxl)
 
 # File path
-file_path <- "C:/Users/matth/Downloads/cancerdata_combined.xlsx"
+file_path <- "cancerdata_combined.xlsx"
 
 # Read data from the Excel file
 data_quality <- read_excel(file_path, sheet = "data_quality")
