@@ -1,0 +1,141 @@
+---
+title: "Cancer Data"
+format: html
+runtime: shiny
+---
+```{r}
+#| echo: false
+library(reactable)
+library(dplyr)
+library(tidyverse)
+library(shiny)
+```
+
+```{r}
+#| echo: false
+library(shiny)
+
+ui <- fluidPage(
+  titlePanel("Dropdown List of Hospitals"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dropdown", "Choose an option:", 
+                  choices = c("South Tyneside and Sunderland NHS Foundation Trust", "Airedale NHS Foundation Trust", "Ashford and St Peters Hospitals NHS Foundation Trust"))
+    ),
+    mainPanel(
+      textOutput("selectedOption")
+    )
+  )
+)
+
+uiOutput("second_dropdown")
+
+
+server <- function(input, output, session) {
+  output$selectedOption <- renderText({
+    paste("You selected:", input$dropdown)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+```{r}
+#| echo: false
+
+ui <- fluidPage(
+  titlePanel("Dropdown Audit"),
+  sidebarLayout(
+    sidebarPanel(
+      selectInput("dropdown", "Choose an option:", 
+                  choices = c("Audit1", "Audit2", "Audit3"))
+    ),
+    mainPanel(
+      textOutput("selectedOption")
+    )
+  )
+)
+
+server <- function(input, output, session) {
+  output$selectedOption <- renderText({
+    paste("You selected:", input$dropdown)
+  })
+}
+
+shinyApp(ui, server)
+```
+
+```{r}
+#| echo: false
+
+Data_Guys_20<-readRDS("./Data_Guys_20.RDS")
+Data_Guys_20<-drop_na(Data_Guys_20)
+
+table<- reactable(Data_Guys_20 %>% select (audit, metric_name, pact, mav_nat, variance, Change1,pact_prev,                                                            variance_prev_quarter, Change2),
+                                      filterable = TRUE,
+                                      searchable = TRUE,
+                                      style = list(fontSize = "10px"),
+                                      theme = reactableTheme(
+                                        headerStyle = list(
+                                                        backgroundColor = "#5F9EA0",  # Blue header
+                                                        color = "white",           # White text
+                                                        fontWeight = "bold"        # Bold text for better visibility
+                                                          )
+                                      ),
+                                      defaultPageSize = 11,
+                                      defaultColDef = colDef(
+                                        vAlign = "center",
+                                        align = "center",
+                                        headerVAlign = "center",
+                                        width = 110
+                                      ),
+                                      columns = list(
+                                        audit=colDef(name="Audit"),
+                                        metric_name=colDef(name="Performance Indicator"),
+                                        pact = colDef(name = "Current Quarter Performance", cell = function(value)                                                                    sprintf("%.2f", value)),
+                                        mav_nat = colDef(name = "National Average", cell = function(value)                                                                              sprintf("%.2f", value)),
+                                        variance = colDef(name="Difference in Performance", cell = function(value)                                                                 sprintf("%.2f", value),
+                                                          style = function(value) {
+                                                            if (value < 0) {
+                                                              list(background = "red", color = "white") 
+                                                            } else {
+                                                              list(background = "green", color = "white")
+                                                            }
+                                                          }),
+                                        Change1 = colDef(name= "Ratio of Performance to National Standard", cell =                                                                       function(value) sprintf("%.2f", value),
+                                                         style = function(value) {
+                                                           if (value < 1) {
+                                                             list(background = "red", color = "white")
+                                                           } else {
+                                                             list(background = "green", color = "white")
+                                                           }
+                                                         }),
+                                        pact_prev=colDef(name="Previous Quarter Performance", 
+                                                         cell = function(value) sprintf("%.2f", value)),
+                                        variance_prev_quarter=colDef(name="Variance compared to Previous Quarter", 
+                                                        cell =function(value) sprintf("%.2f", value),
+                                         style = function(value) {
+                                                            if (value < 0) {
+                                                              list(background = "red", color = "white") 
+                                                            } else {
+                                                              list(background = "green", color = "white")
+                                                            }
+                                                          }),
+                                        Change2=colDef(name=" Ratio of performance compared to Previous Quarter",
+                                                        cell = function(value) sprintf("%.2f", value),
+                                                            style = function(value) {
+                                                           if (value < 1) {
+                                                             list(background = "red", color = "white")
+                                                           } else {
+                                                             list(background = "green", color = "white")
+                                                           }
+                                                         })
+                                                   ),
+                                      bordered = TRUE,
+                                      highlight = TRUE
+                                                   )
+                   
+table
+  
+```
+
