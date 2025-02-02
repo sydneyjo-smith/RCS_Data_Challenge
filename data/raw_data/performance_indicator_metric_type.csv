@@ -1,9 +1,9 @@
 Audit,Metric,Type
 NAoMe,People with newly diagnosed metastatic breast cancer discussed within a multidisciplinary team (MDT),1
-NAoPri,People receiving breast cancer surgery within 12 months of diagnosis,?
+NAoPri,People receiving breast cancer surgery within 12 months of diagnosis,1
 NAoPri,People who have a record of having contact with a Clinical Nurse Specialist (CNS),1
 NAoPri,People recorded as having an immediate reconstruction following a mastectomy,1
-NBOCA,People with stage 3 colon cancer receiving adjuvant chemotherapy (unadjusted),?
+NBOCA,People with stage 3 colon cancer receiving adjuvant chemotherapy (unadjusted),1
 NBOCA,Seen by Clinical Nurse Specialist (unadjusted),1
 NBOCA,Unadjusted 30-day emergency readmission after major resection,0
 NBOCA,Unadjusted 30-day unplanned return to theatre after major resection,0
@@ -18,7 +18,7 @@ NNHLA,People seen by a clinical nurse specialist (all),1
 NNHLA,People seen by a clinical nurse specialist (high-grade),1
 NNHLA,People seen by a clinical nurse specialist (low-grade),1
 NNHLA,People who started chemotherapy within 62 days of referral (high-grade),0
-NOCA,Emergency admissions prior to diagnosis,?
+NOCA,Emergency admissions prior to diagnosis,0
 NOCA,Receipt of any treatment (surgery and/or chemotherapy),0
 NOCA,Receipt of platinum-based chemotherapy,0
 NOCA,One-year survival,1
