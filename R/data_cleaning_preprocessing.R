@@ -3,7 +3,7 @@
 library("readxl")
 library("dplyr")
 
-### Load in data from excel file
+################## Load in data from excel file ##################
 audit_meta_info <- read_excel("data/raw_data/cancerdata_combined.xlsx", sheet = "audit_meta_info")
 indicators_trust <- read_excel("data/raw_data/cancerdata_combined.xlsx", sheet = "Indicators_trust")
 indicators_CA <- read_excel("data/raw_data/cancerdata_combined.xlsx", sheet = "Indicators_CA")
@@ -13,7 +13,7 @@ metric_info <- read_excel("data/raw_data/cancerdata_combined.xlsx", sheet = "met
 data_quality_targets <- read.csv("data/raw_data/data_quality_targets.csv")
 performance_indicator_metric_type <- read.csv("data/raw_data/performance_indicator_metric_type.csv")
 
-################## indicators_trust
+################## indicators_trust ##################
 
 # trust_name (Guy's / Guys)
 indicators_trust <- indicators_trust %>%
@@ -105,7 +105,44 @@ indicators_trust <- indicators_trust %>%
 # denominator "0" (NNHLA)
 # demoninator "1","2","3","4" (NOCA - Clatterbridge Cancer Centre NHS Foundation Trust. Data should be supressed for under 5)
 
-### Saving processed files
+################## Data Quality  ##################
+
+
+# Values 0.0-1 (NAoME, NAoPri, NNHLA)
+# Values 0-100 (NKCA, NOCA, NOGCA, NPaCA)
+# Mixed values (NBOCA (unadjusted-30/90 are 0-1, others 0-100))
+data_quality <- data_quality %>%
+  mutate(
+    pact = if_else(pact > 1, pact/100, pact),
+    mav = if_else(mav > 1, mav/100, mav))
+
+# date showing quarter_year (NOGCA, NPaCA)
+quarters <- data_quality %>%
+  group_by(date, quarter_year) %>%
+  summarise(date = first(date)) %>%
+  ungroup
+
+unique_quarters <- quarters %>%
+  slice(1:16) %>%
+  mutate(start_date = date) %>%
+  arrange(start_date) %>%
+  select(-date)
+
+data_quality <- data_quality %>%
+  left_join(unique_quarters, by = "quarter_year") %>%
+  mutate(date = start_date) %>%  # Assign start_date to the date column
+  select(-start_date)  # Remove redundant column if necessary
+
+# Join the directional variable
+data_quality <- data_quality %>%
+  left_join(data_quality_targets, by=c("audit", "metric_name"))
+
+# Add cancer audit name
+data_quality <- data_quality %>%
+  left_join(audit_meta_info, by=c("audit"))
+
+################## Saving processed files  ##################
 
 write.csv(indicators_trust, "data/processed_data/indicators_trust.csv", row.names = FALSE,na = "")
+write.csv(data_quality, "data/processed_data/data_quality.csv", row.names = FALSE,na = "")
 
