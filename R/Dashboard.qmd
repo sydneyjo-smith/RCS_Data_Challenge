@@ -1,6 +1,8 @@
 ---
 title: "Cancer services"
-format: dashboard
+format: 
+  dashboard:
+    theme: minty
 server: shiny
 ---
 

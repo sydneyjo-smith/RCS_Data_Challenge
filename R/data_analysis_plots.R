@@ -106,5 +106,4 @@ interactive_line_plot <- interactive_line_plot %>%
   layout(legend = list(orientation = 'h'))
 interactive_line_plot
 
-
 #################################### PLOT 4  ####################################
