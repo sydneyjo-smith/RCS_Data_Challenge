@@ -760,8 +760,7 @@ library(bsicons)
 
 
 # Loading in plot data
-indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
-data_quality <- read_csv("../data/processed_data/data_quality.csv")
+indicators_trust <- read_csv("data_long.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
@@ -796,7 +795,7 @@ output$plot_3 <- renderPlotly({
       geom_point(data = filter(plot_3_dataset(), category == "Trust moving average" & is.na(denominator)),
                  shape = 21,  # Shape 21 allows color & fill customization
                  fill = "white",
-                 color = "red",
+                 color = "cornflowerblue",
                  stroke = 1,  # Controls border thickness
                  size = 4,
                  alpha = 1) +
