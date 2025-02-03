@@ -80,7 +80,7 @@ plot_3_dataset <- reactive({
  
 
 # output$data <- renderTable({
-#   dataset()
+#   plot_1_dataset()
 # })
 
 output$plot_3 <- renderPlotly({

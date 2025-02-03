@@ -63,6 +63,11 @@ indicators_trust <- indicators_trust %>%
 
 # missing alliance_name (NOCA audit)
 
+indicators_trust <- indicators_trust %>%
+  filter(!(is.na(trust_code) &
+           trust_name == "Guy's and St Thomas' NHS Foundation Trust" &
+           metric_name == "Emergency admissions prior to diagnosis"))
+
 # missing trust_code (NOCA audit)
 unique_trust_names <- indicators_trust %>%
   group_by(trust_code, trust_name) %>%
