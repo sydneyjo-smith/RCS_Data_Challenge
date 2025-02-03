@@ -17,11 +17,14 @@ library(tidyr)
 library(plotly)
 library(bslib)
 library(bsicons)
+library(reactable)
+library(tidyverse)
 
 
 # Loading in plot data
 indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
+plot_1_data<-read_csv("../data/processed_data/plot1.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
 audit_list <- unique(indicators_trust$audit_name_full)
@@ -52,6 +55,104 @@ selectInput('audit_name_full', 'Select Cancer Audit', audit_list)
 ```
 
 ## Row {.tabset}
+```{r}
+reactableOutput("table_1")
+```
+
+
+```{r}
+
+#| context: server
+
+# Reactive dataset based on user input for Plot 3
+plot_1_dataset <- reactive({
+  req(input$trust_name, input$audit_name_full)  # Ensure inputs exist
+  
+  plot_1_data %>%
+    filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
+})
+
+output$table_1 <- renderReactable({reactable(plot_1_dataset(),
+                  filterable = TRUE,
+                  searchable = TRUE,
+                  columns = list(
+                    audit=colDef(show=FALSE),
+                    trust_code=colDef(show=FALSE),
+                    audit_name_full = colDef(show=FALSE),
+                    RowType = colDef(show = FALSE),
+                    metric_name = colDef(
+                      name = "Metric Name",
+                      cell = function(value, index) {
+                        if (plot_1_dataset$RowType[index] == "Header") {
+                          return(plot_1_dataset$audit_name_full[index])
+                        } else {
+                          return(value)
+                        }
+                      }
+                    ),
+                    denominator = colDef(name="Case Volume",
+                                         cell = function(value, index) {
+                                           if (plot_1_dataset$RowType[index] == "Header") {
+                                             return("")
+                                           } else {
+                                             return(sprintf("%.2f", value))
+                                           }
+                                         }
+                    ),
+                    mav = colDef(name = "Current Quarter Moving Average Performance (%)",
+                                 cell = function(value, index) {
+                                   if (plot_1_dataset$RowType[index] == "Header") {
+                                     return("")
+                                   } else {
+                                     return(sprintf("%.2f", value))
+                                   }
+                                 }
+                    ),
+                    variance = colDef(name="Comparison to National Performance (%)",
+                                      cell = function(value, index) {
+                                        if (plot_1_dataset$RowType[index] == "Header") {
+                                          return("")  # Empty cell for header rows
+                                        } else {
+                                          metric_type <- plot_1_dataset$metric_type[index]
+                                          color <- get_color_2(value, metric_type)  # Apply color gradient function
+                                          return(div(
+                                            style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
+                                            round(value, 2)  # Round for better readability
+                                          ))
+                                        }
+                                      }
+                    ),
+                    variance_prev_quarter = colDef( name="Comparison to Previous Quarter Performance (%)",
+                                                    cell = function(value, index) {
+                                                      if (plot_1_dataset$RowType[index] == "Header") {
+                                                        return("")  # Empty cell for header rows
+                                                      } else {
+                                                        metric_type <- plot_1_dataset$metric_type[index]
+                                                        color <- get_color_2(value, metric_type)  # Apply color gradient function
+                                                        return(div(
+                                                          style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
+                                                          round(value, 2)  # Round for better readability
+                                                        ))
+                                                      }
+                                                    }
+                    )
+                  ),
+                  rowStyle = function(index) {
+                    if (plot_1_dataset$RowType[index] == "Header") {
+                      return(list(
+                        background = "blue",
+                        color = "white",
+                        fontWeight = "bold"
+                      ))  # Entire row is blue with white bold text
+                    } else {
+                      return(NULL)  # Default row style
+                    }
+                  }
+                 )
+
+      })
+ 
+```
 
 ### Data quality
 

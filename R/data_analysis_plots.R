@@ -45,7 +45,7 @@ plot_1_data_previous <- plot_1_data %>%
   # Join the previous quarter's value
   left_join(Data_Guys, select(audit, quarter_year, metric_name, pact, mav, mav_nat, mav_ca),
             by = c("audit" = "audit", "metric_name"="metric_name", "previous_quarter_year" = "quarter_year"), suffix = c("", "_prev")) %>%
-  select(audit, audit_name_full, trust_code, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
+  select(audit, audit_name_full, trust_name, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
          mav_prev, mav_nat_prev, mav_ca_prev)
 
 
@@ -61,20 +61,11 @@ plot_1_data_previous<- plot_1_data_previous%>% mutate(variance=mav-mav_nat)%>%
   mutate(variance_prev_quarter=mav-mav_prev)
 
 # selecting columns for tables
-plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_code, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
-
-#########################save prepared data for plot1 ###############################
-
-write.csv(plot_1_data_previous, "data/processed_data/plot_1_data_previous.csv", row.names = FALSE, na = "")
-
-################plotting plot 1 #########################################################
-plot_1_data_filtered <- plot_1_data_previous %>%
-  filter(audit == 'NNHLA' &
-           trust_code == 'RJ1')
+plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_name, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
 
 
 #code to allocate header rows by RowType
-header_rows <- plot_1_data_filtered %>%
+header_rows <- plot_1_data_previous %>%
   distinct(audit_name_full) %>%
   mutate(
     audit_name_full=audit_name_full,
@@ -89,16 +80,24 @@ header_rows <- plot_1_data_filtered %>%
 
 
 # Add header rows to the dataset- generate the rest of variables as RowType=Data
-df_with_titles <- plot_1_data_filtered %>%
+df_with_titles <- plot_1_data_previous %>%
   mutate(RowType = "Data") %>%
   bind_rows(header_rows) %>%
   mutate(RowType = factor(RowType, levels = c("Header", "Data")))%>%
   arrange(audit_name_full, RowType)  # Ensures audit headers appear before metrics
 
+#########################save prepared data for plot1 ###############################
+
+write.csv(df_with_titles, "data/processed_data/plot1.csv", row.names = FALSE, na = "")
+
+################plotting plot 1 #########################################################
+plot_1_data_filtered <- df_with_titles %>%
+  filter(audit == 'NNHLA' &
+           trust_code == 'RJ1')
 
 # Display in reactable with styling
 
-table_1<-reactable(df_with_titles,
+table_1<-reactable(plot_1_data_filtered,
                   filterable = TRUE,
                   searchable = TRUE,
                   columns = list(
