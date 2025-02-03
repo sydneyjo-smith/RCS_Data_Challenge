@@ -18,7 +18,8 @@ library(bsicons)
 
 
 # Loading in plot data
-indicators_trust <- read_csv("data_long.csv")
+indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
+data_quality <- read_csv("../data/processed_data/data_quality.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
@@ -105,8 +106,8 @@ output$plot_3 <- renderPlotly({
            color = "Category") +
       scale_y_continuous(labels = scales::percent_format(scale = 100)) +  # Format as percentage
       theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels for readability
-      facet_wrap(~ metric_name, scales = "free_y",labeller = label_wrap_gen(55))  + # Creates a plot for each metric_name
-      theme(panel.spacing = unit(2, "lines"),legend.position="bottom")
+      facet_wrap(~ metric_name, scales = "free_y",labeller = label_wrap_gen(55),nrow = 3)  + # Creates a plot for each metric_name
+      theme(panel.spacing = unit(1, "lines"),legend.position="bottom")
     
     # Convert to an interactive plotly plot
     interactive_line_plot <- ggplotly(performance_plot, tooltip = "text")
