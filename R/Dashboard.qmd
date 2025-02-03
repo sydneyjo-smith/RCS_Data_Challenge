@@ -13,6 +13,9 @@ library(shiny)
 library(dplyr)
 library(tidyr)
 library(plotly)
+library(bslib)
+library(bsicons)
+
 
 # Loading in plot data
 indicators_trust <- read_csv("data_long.csv")
@@ -113,3 +116,42 @@ output$plot_3 <- renderPlotly({
 })
 
 ```
+
+# Hospital summary
+
+
+## {.sidebar width="25%"}
+```{r}
+selectInput('trust_name', 'Select hospital:', trust_list) 
+
+```
+
+## Collumn
+### Row 1
+Average Quarterly Case loads
+
+### Row 2
+```{r}
+
+value_box(
+  title = "Trust average",
+  value = "23 /qtr",
+  showcase = bsicons::bs_icon("hospital"),
+  theme = "primary"
+)
+value_box(
+  title = "Cancer alliance average",
+  value = "34 /qtr",
+  showcase = bsicons::bs_icon("geo-alt"),
+  theme = "secondary"
+)
+value_box(
+  title = "National average",
+  value = "23 /qtr",
+  showcase = bsicons::bs_icon("globe"),
+  theme = "secondary"
+)
+
+```
+### Row 2
+
