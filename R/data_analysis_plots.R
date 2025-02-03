@@ -66,7 +66,7 @@ plot_2_data_long <- plot_2_data_long %>%
 
 ############ Save prepared data ############
 
-write.csv(plot_2_data_long, "data/processed_data/data_long.csv", row.names = FALSE,na = "")
+write.csv(plot_2_data_long, "data/processed_data/data_plot_3.csv", row.names = FALSE,na = "")
 
 
 ############ Plotting ############
