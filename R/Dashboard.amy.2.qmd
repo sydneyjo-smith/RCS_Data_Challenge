@@ -44,6 +44,17 @@ selectInput('quarter_year', 'Select quarter', quarter_list)
 
 Plot 1: Quarterly summary table
 
+# Performance
+
+
+## {.sidebar width="25%"}
+```{r}
+selectInput('trust_name', 'Select hospital:', trust_list) 
+selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
+
+```
+
+## Row {.tabset}
 ```{r}
 #| context: server
 reactableOutput("table_1")
@@ -51,8 +62,7 @@ reactableOutput("table_1")
 
 # Reactive dataset based on user input for Plot 1
 plot_1_dataset <- reactive({
-  req(input$trust_name, input$quarter_year)  # Ensure inputs exist
-  
+  req(input$trust_name, input$quarter_year) 
   plot1 %>%
     filter(trust_name == input$trust_name & quarter_year == input$quarter_year)
 })
@@ -133,7 +143,7 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                     mav = colDef(name = "Current Quarter Moving Average Performance (%)",
                                   cell = function(value, index) {
                                                     data <- plot_1_dataset()
-                                                    if (data[index, "RowType"] == "Header") {  # Correct indexing method
+                                                    if (data[index, "RowType"] == "Header") {  
                                                   return("")  # Blank for header rows
                                                   } else {
                                                  return(sprintf("%.2f", as.numeric(value)))
@@ -149,10 +159,10 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                                         } else {
                                         metric_type <- data[index, "metric_type"]  
 
-                                       color <- get_color_2(as.numeric(value), metric_type)  # Ensure numeric formatting
+                                       color <- get_color_2(as.numeric(value), metric_type) 
                                       return(htmltools::div(
-                                             style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
-                                             round(as.numeric(value), 2)  # Round for better readability
+                                             style = paste("background-color:", color, "; padding: 8px;                                                border-radius: 4px;"),
+                                             round(as.numeric(value), 2)  
                                           ))
                                         }
                                       }
@@ -166,8 +176,8 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                                                        metric_type <- data[index, "metric_type"]  
                                                  color <- get_color_2(as.numeric(value), metric_type) 
                                                          return(htmltools::div(
-                                               style = paste("background-color:", color, "; padding: 8px; border-radius:                                                                  4px;"),
-                                                  round(as.numeric(value), 2) # Round for better readability
+                                               style = paste("background-color:", color, "; padding: 8px;                                                               border-radius: 4px;"),
+                                                  round(as.numeric(value), 2) 
                                                         ))
                                                       }
                                                     }
@@ -176,20 +186,6 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                 )
              })
 ```
-```
-
-# Performance
-
-
-## {.sidebar width="25%"}
-```{r}
-selectInput('trust_name', 'Select hospital:', trust_list) 
-selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
-
-```
-
-## Row {.tabset}
-
 
 ### Data quality
 

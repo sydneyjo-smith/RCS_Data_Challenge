@@ -63,7 +63,7 @@ ul.task-list li input[type="checkbox"] {
         
       </div>
     </div>
-<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-quarterly-summary" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#quarterly-summary" data-scrolling="false" href="#quarterly-summary" aria-controls="quarterly-summary" aria-selected="true"><span class="nav-link-text">Quarterly Summary</span></a></li><li class="nav-item" role="presentation"><a id="tab-performance" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#performance" data-scrolling="false" href="#performance" aria-controls="performance" aria-selected="false"><span class="nav-link-text">Performance</span></a></li><li class="nav-item" role="presentation"><a id="tab-hospital-summary" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#hospital-summary" data-scrolling="false" href="#hospital-summary" aria-controls="hospital-summary" aria-selected="false"><span class="nav-link-text">Hospital summary</span></a></li></ul></div></div>
+<div id="dashboard-collapse" class="navbar-collapse collapse"><ul class="navbar-nav navbar-nav-scroll me-auto" role="tablist"><li class="nav-item" role="presentation"><a id="tab-quarterly-summary" class="nav-link active" data-bs-toggle="tab" role="tab" data-bs-target="#quarterly-summary" data-scrolling="false" href="#quarterly-summary" aria-controls="quarterly-summary" aria-selected="true"><span class="nav-link-text">Quarterly Summary</span></a></li><li class="nav-item" role="presentation"><a id="tab-hospital-summary" class="nav-link" data-bs-toggle="tab" role="tab" data-bs-target="#hospital-summary" data-scrolling="false" href="#hospital-summary" aria-controls="hospital-summary" aria-selected="false"><span class="nav-link-text">Hospital summary</span></a></li></ul></div></div>
 </nav>
 </header>
 <div class="page-layout-custom quarto-dashboard-content bslib-gap-spacing html-fill-container bslib-page-fill quarto-dashboard-pages">  
@@ -71,12 +71,209 @@ ul.task-list li input[type="checkbox"] {
 <div class="bslib-grid-item html-fill-item tab-content bslib-grid" data-layout="fill" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
 <div id="quarterly-summary" class="dashboard-page tab-pane show active html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-quarterly-summary">
 <div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" style=" --bslib-sidebar-width: 25%" data-bslib-sidebar-border="false" data-bslib-sidebar-border-radius="false"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
 <div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
 <p>Plot 1: Quarterly summary table</p>
+<pre><code>
+# Performance
+
+
+## {.sidebar width="25%"}
+::: {.cell}
+::: {.cell-output-display}
+
+```{=html}
+&lt;div class="form-group shiny-input-container"&gt;
+&lt;label class="control-label" id="trust_name-label" for="trust_name"&gt;Select hospital:&lt;/label&gt;
+&lt;div&gt;
+&lt;select id="trust_name" class="shiny-input-select"&gt;&lt;option value="Airedale NHS Foundation Trust" selected&gt;Airedale NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Ashford and St Peters Hospitals NHS Foundation Trust"&gt;Ashford and St Peters Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Barking, Havering and Redbridge University Hospitals NHS Trust"&gt;Barking, Havering and Redbridge University Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Barnsley Hospital NHS Foundation Trust"&gt;Barnsley Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Barts Health NHS Trust"&gt;Barts Health NHS Trust&lt;/option&gt;
+&lt;option value="Bedfordshire Hospitals NHS Foundation Trust"&gt;Bedfordshire Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Blackpool Teaching Hospitals NHS Foundation Trust"&gt;Blackpool Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Bolton NHS Foundation Trust"&gt;Bolton NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Bradford Teaching Hospitals NHS Foundation Trust"&gt;Bradford Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Buckinghamshire Healthcare NHS Trust"&gt;Buckinghamshire Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="Calderdale and Huddersfield NHS Foundation Trust"&gt;Calderdale and Huddersfield NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Cambridge University Hospitals NHS Foundation Trust"&gt;Cambridge University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Chelsea and Westminster Hospital NHS Foundation Trust"&gt;Chelsea and Westminster Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Chesterfield Royal Hospital NHS Foundation Trust"&gt;Chesterfield Royal Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Countess of Chester Hospital NHS Foundation Trust"&gt;Countess of Chester Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="County Durham and Darlington NHS Foundation Trust"&gt;County Durham and Darlington NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Croydon Health Services NHS Trust"&gt;Croydon Health Services NHS Trust&lt;/option&gt;
+&lt;option value="Dartford and Gravesham NHS Trust"&gt;Dartford and Gravesham NHS Trust&lt;/option&gt;
+&lt;option value="Doncaster and Bassetlaw Teaching Hospitals NHS Foundation Trust"&gt;Doncaster and Bassetlaw Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Dorset County Hospital NHS Foundation Trust"&gt;Dorset County Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Dudley Group NHS Foundation Trust"&gt;Dudley Group NHS Foundation Trust&lt;/option&gt;
+&lt;option value="East Cheshire NHS Trust"&gt;East Cheshire NHS Trust&lt;/option&gt;
+&lt;option value="East Kent Hospitals University NHS Foundation Trust"&gt;East Kent Hospitals University NHS Foundation Trust&lt;/option&gt;
+&lt;option value="East Lancashire Hospitals NHS Trust"&gt;East Lancashire Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="East Suffolk and North Essex NHS Foundation Trust"&gt;East Suffolk and North Essex NHS Foundation Trust&lt;/option&gt;
+&lt;option value="East Sussex Healthcare NHS Trust"&gt;East Sussex Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="East and North Hertfordshire NHS Trust"&gt;East and North Hertfordshire NHS Trust&lt;/option&gt;
+&lt;option value="Frimley Health NHS Foundation Trust"&gt;Frimley Health NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Gateshead Health NHS Foundation Trust"&gt;Gateshead Health NHS Foundation Trust&lt;/option&gt;
+&lt;option value="George Eliot Hospital NHS Trust"&gt;George Eliot Hospital NHS Trust&lt;/option&gt;
+&lt;option value="Gloucestershire Hospitals NHS Foundation Trust"&gt;Gloucestershire Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Great Western Hospitals NHS Foundation Trust"&gt;Great Western Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Guy&amp;#39;s and St Thomas&amp;#39; NHS Foundation Trust"&gt;Guy's and St Thomas' NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Hampshire Hospitals NHS Foundation Trust"&gt;Hampshire Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Harrogate and District NHS Foundation Trust"&gt;Harrogate and District NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Hillingdon Hospitals NHS Foundation Trust"&gt;Hillingdon Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Hull University Teaching Hospitals NHS Trust"&gt;Hull University Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Imperial College Healthcare NHS Trust"&gt;Imperial College Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="Isle of Wight NHS Trust"&gt;Isle of Wight NHS Trust&lt;/option&gt;
+&lt;option value="James Paget University Hospitals NHS Foundation Trust"&gt;James Paget University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Kettering General Hospital NHS Foundation Trust"&gt;Kettering General Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Kings College Hospital NHS Foundation Trust"&gt;Kings College Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Kingston Hospital NHS Foundation Trust"&gt;Kingston Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Lancashire Teaching Hospitals NHS Foundation Trust"&gt;Lancashire Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Leeds Teaching Hospitals NHS Trust"&gt;Leeds Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Lewisham and Greenwich NHS Trust"&gt;Lewisham and Greenwich NHS Trust&lt;/option&gt;
+&lt;option value="Liverpool University Hospitals NHS Foundation Trust"&gt;Liverpool University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="London North West University Healthcare NHS Trust"&gt;London North West University Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="Maidstone and Tunbridge Wells NHS Trust"&gt;Maidstone and Tunbridge Wells NHS Trust&lt;/option&gt;
+&lt;option value="Manchester University NHS Foundation Trust"&gt;Manchester University NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Medway NHS Foundation Trust"&gt;Medway NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Mersey and West Lancashire Teaching Hospitals NHS Trust"&gt;Mersey and West Lancashire Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Mid Cheshire Hospitals NHS Foundation Trust"&gt;Mid Cheshire Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Mid Yorkshire Teaching NHS Trust"&gt;Mid Yorkshire Teaching NHS Trust&lt;/option&gt;
+&lt;option value="Mid and South Essex NHS Foundation Trust"&gt;Mid and South Essex NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Milton Keynes University Hospital NHS Foundation Trust"&gt;Milton Keynes University Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Newcastle Upon Tyne Hospitals NHS Foundation Trust"&gt;Newcastle Upon Tyne Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Norfolk and Norwich University Hospitals NHS Foundation Trust"&gt;Norfolk and Norwich University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="North Bristol NHS Trust"&gt;North Bristol NHS Trust&lt;/option&gt;
+&lt;option value="North Cumbria Integrated Care NHS Foundation Trust"&gt;North Cumbria Integrated Care NHS Foundation Trust&lt;/option&gt;
+&lt;option value="North Middlesex University Hospital NHS Trust"&gt;North Middlesex University Hospital NHS Trust&lt;/option&gt;
+&lt;option value="North Tees and Hartlepool NHS Foundation Trust"&gt;North Tees and Hartlepool NHS Foundation Trust&lt;/option&gt;
+&lt;option value="North West Anglia NHS Foundation Trust"&gt;North West Anglia NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Northampton General Hospital NHS Trust"&gt;Northampton General Hospital NHS Trust&lt;/option&gt;
+&lt;option value="Northern Care Alliance NHS Foundation Trust"&gt;Northern Care Alliance NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Northern Lincolnshire and Goole NHS Foundation Trust"&gt;Northern Lincolnshire and Goole NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Northumbria Healthcare NHS Foundation Trust"&gt;Northumbria Healthcare NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Nottingham University Hospitals NHS Trust"&gt;Nottingham University Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Oxford University Hospitals NHS Foundation Trust"&gt;Oxford University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Portsmouth Hospitals University NHS Trust"&gt;Portsmouth Hospitals University NHS Trust&lt;/option&gt;
+&lt;option value="Princess Alexandra Hospital NHS Trust"&gt;Princess Alexandra Hospital NHS Trust&lt;/option&gt;
+&lt;option value="Queen Elizabeth Hospital, Kings Lynn, NHS Foundation Trust"&gt;Queen Elizabeth Hospital, Kings Lynn, NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Rotherham NHS Foundation Trust"&gt;Rotherham NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Berkshire NHS Foundation Trust"&gt;Royal Berkshire NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Cornwall Hospitals NHS Trust"&gt;Royal Cornwall Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Royal Devon University Healthcare NHS Foundation Trust"&gt;Royal Devon University Healthcare NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Free London NHS Foundation Trust"&gt;Royal Free London NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Marsden NHS Foundation Trust"&gt;Royal Marsden NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Surrey County Hospital NHS Foundation Trust"&gt;Royal Surrey County Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal United Hospitals Bath NHS Foundation Trust"&gt;Royal United Hospitals Bath NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Wolverhampton NHS Trust"&gt;Royal Wolverhampton NHS Trust&lt;/option&gt;
+&lt;option value="Salisbury NHS Foundation Trust"&gt;Salisbury NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Sandwell and West Birmingham Hospitals NHS Trust"&gt;Sandwell and West Birmingham Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Sheffield Teaching Hospitals NHS Foundation Trust"&gt;Sheffield Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Sherwood Forest Hospitals NHS Foundation Trust"&gt;Sherwood Forest Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Shrewsbury and Telford Hospital NHS Trust"&gt;Shrewsbury and Telford Hospital NHS Trust&lt;/option&gt;
+&lt;option value="Somerset NHS Foundation Trust"&gt;Somerset NHS Foundation Trust&lt;/option&gt;
+&lt;option value="South Tees Hospitals NHS Foundation Trust"&gt;South Tees Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="South Warwickshire University NHS Foundation Trust"&gt;South Warwickshire University NHS Foundation Trust&lt;/option&gt;
+&lt;option value="St Georges University Hospitals NHS Foundation Trust"&gt;St Georges University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Surrey and Sussex Healthcare NHS Trust"&gt;Surrey and Sussex Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="Tameside and Glossop Integrated Care NHS Foundation Trust"&gt;Tameside and Glossop Integrated Care NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Torbay and South Devon NHS Foundation Trust"&gt;Torbay and South Devon NHS Foundation Trust&lt;/option&gt;
+&lt;option value="United Lincolnshire Hospitals NHS Trust"&gt;United Lincolnshire Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="University College London Hospitals NHS Foundation Trust"&gt;University College London Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospital Southampton NHS Foundation Trust"&gt;University Hospital Southampton NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Birmingham NHS Foundation Trust"&gt;University Hospitals Birmingham NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Coventry and Warwickshire NHS Trust"&gt;University Hospitals Coventry and Warwickshire NHS Trust&lt;/option&gt;
+&lt;option value="University Hospitals Dorset NHS Foundation Trust"&gt;University Hospitals Dorset NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Plymouth NHS Trust"&gt;University Hospitals Plymouth NHS Trust&lt;/option&gt;
+&lt;option value="University Hospitals Sussex NHS Foundation Trust"&gt;University Hospitals Sussex NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals of Derby and Burton NHS Foundation Trust"&gt;University Hospitals of Derby and Burton NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals of Leicester NHS Trust"&gt;University Hospitals of Leicester NHS Trust&lt;/option&gt;
+&lt;option value="University Hospitals of Morecambe Bay NHS Foundation Trust"&gt;University Hospitals of Morecambe Bay NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals of North Midlands NHS Trust"&gt;University Hospitals of North Midlands NHS Trust&lt;/option&gt;
+&lt;option value="Walsall Healthcare NHS Trust"&gt;Walsall Healthcare NHS Trust&lt;/option&gt;
+&lt;option value="Warrington and Halton Teaching Hospitals NHS Foundation Trust"&gt;Warrington and Halton Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="West Hertfordshire Teaching Hospitals NHS Trust"&gt;West Hertfordshire Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="West Suffolk NHS Foundation Trust"&gt;West Suffolk NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Whittington Health NHS Trust"&gt;Whittington Health NHS Trust&lt;/option&gt;
+&lt;option value="Wirral University Teaching Hospital NHS Foundation Trust"&gt;Wirral University Teaching Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Worcestershire Acute Hospitals NHS Trust"&gt;Worcestershire Acute Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Wrightington, Wigan and Leigh NHS Foundation Trust"&gt;Wrightington, Wigan and Leigh NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Wye Valley NHS Trust"&gt;Wye Valley NHS Trust&lt;/option&gt;
+&lt;option value="York and Scarborough Teaching Hospitals NHS Foundation Trust"&gt;York and Scarborough Teaching Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Ashford and St Peter&amp;#39;s Hospitals NHS Foundation Trust"&gt;Ashford and St Peter's Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Christie NHS Foundation Trust"&gt;Christie NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Clatterbridge Cancer Centre NHS Foundation Trust"&gt;Clatterbridge Cancer Centre NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Countess Of Chester Hospital NHS Foundation Trust"&gt;Countess Of Chester Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Epsom and St Helier University Hospitals NHS Trust"&gt;Epsom and St Helier University Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Homerton Healthcare NHS Foundation Trust"&gt;Homerton Healthcare NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Isle Of Wight NHS Trust"&gt;Isle Of Wight NHS Trust&lt;/option&gt;
+&lt;option value="King&amp;#39;s College Hospital NHS Foundation Trust"&gt;King's College Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Mersey And West Lancashire Teaching Hospitals NHS Trust"&gt;Mersey And West Lancashire Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="Queen Elizabeth Hospital, King&amp;#39;s Lynn, NHS Foundation Trust"&gt;Queen Elizabeth Hospital, King's Lynn, NHS Foundation Trust&lt;/option&gt;
+&lt;option value="South Tyneside and Sunderland NHS Foundation Trust"&gt;South Tyneside and Sunderland NHS Foundation Trust&lt;/option&gt;
+&lt;option value="St George&amp;#39;s University Hospitals NHS Foundation Trust"&gt;St George's University Hospitals NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Stockport NHS Foundation Trust"&gt;Stockport NHS Foundation Trust&lt;/option&gt;
+&lt;option value="United Lincolnshire Teaching Hospitals NHS Trust"&gt;United Lincolnshire Teaching Hospitals NHS Trust&lt;/option&gt;
+&lt;option value="University Hospitals Bristol and Weston NHS Foundation Trust"&gt;University Hospitals Bristol and Weston NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Of Derby and Burton NHS Foundation Trust"&gt;University Hospitals Of Derby and Burton NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Of Leicester NHS Trust"&gt;University Hospitals Of Leicester NHS Trust&lt;/option&gt;
+&lt;option value="University Hospitals Of Morecambe Bay NHS Foundation Trust"&gt;University Hospitals Of Morecambe Bay NHS Foundation Trust&lt;/option&gt;
+&lt;option value="University Hospitals Of North Midlands NHS Trust"&gt;University Hospitals Of North Midlands NHS Trust&lt;/option&gt;
+&lt;option value="Liverpool Heart and Chest Hospital NHS Foundation Trust"&gt;Liverpool Heart and Chest Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Moorfields Eye Hospital NHS Foundation Trust"&gt;Moorfields Eye Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="North East London NHS Foundation Trust"&gt;North East London NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Queen Victoria Hospital NHS Foundation Trust"&gt;Queen Victoria Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust"&gt;Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal National Orthopaedic Hospital NHS Trust"&gt;Royal National Orthopaedic Hospital NHS Trust&lt;/option&gt;
+&lt;option value="Royal Orthopaedic Hospital NHS Foundation Trust"&gt;Royal Orthopaedic Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Royal Papworth Hospital NHS Foundation Trust"&gt;Royal Papworth Hospital NHS Foundation Trust&lt;/option&gt;
+&lt;option value="The Walton Centre NHS Foundation Trust"&gt;The Walton Centre NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Liverpool Women&amp;#39;s NHS Foundation Trust"&gt;Liverpool Women's NHS Foundation Trust&lt;/option&gt;
+&lt;option value="Birmingham Women&amp;#39;s and Children&amp;#39;s NHS Foundation Trust"&gt;Birmingham Women's and Children's NHS Foundation Trust&lt;/option&gt;&lt;/select&gt;
+&lt;script type="application/json" data-for="trust_name" data-nonempty=""&gt;{"plugins":["selectize-plugin-a11y"]}&lt;/script&gt;
+&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+:::
+<div class="cell-output-display html-fill-item html-fill-container no-overflow-x">
+<div class="form-group shiny-input-container html-fill-item html-fill-container">
+<label class="control-label" id="audit_name_full-label" for="audit_name_full">Select Cancer Audit</label>
+<div class="html-fill-item html-fill-container">
+<select id="audit_name_full" class="shiny-input-select"><option value="National Audit of Metastatic Breast Cancer" selected="">National Audit of Metastatic Breast Cancer</option>
+<option value="National Audit of Primary Breast Cancer">National Audit of Primary Breast Cancer</option>
+<option value="National Bowel Cancer Audit">National Bowel Cancer Audit</option>
+<option value="National Kidney Cancer Audit">National Kidney Cancer Audit</option>
+<option value="National Non-Hodgkin Lymphoma Audit">National Non-Hodgkin Lymphoma Audit</option>
+<option value="National Ovarian Cancer Audit">National Ovarian Cancer Audit</option>
+<option value="National Oesophago-Gastric Cancer Audit">National Oesophago-Gastric Cancer Audit</option>
+<option value="National Pancreatic Cancer Audit">National Pancreatic Cancer Audit</option></select>
+<script type="application/json" data-for="audit_name_full" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
+</div>
+</div>
+</div>
+:::
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div><div class="card tabset html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-header bslib-navs-card-title"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
+
+</span></div><ul class="nav nav-tabs card-header-tabs" role="tablist" data-tabsetid="card-tabset-2"><li class="nav-item" role="presentation"><a href="#card-tabset-2-1" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Data quality" aria-selected="true" class="nav-link active">Data quality</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-2-2" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Performance indicators" aria-selected="false" class="nav-link">Performance indicators</a></li></ul></div>
+
+
+<div class="tab-content html-fill-item html-fill-container" data-tabset-id="card-tabset-2"><div class="tab-pane active show html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-1"><div class="card-body html-fill-item html-fill-container" data-title="Data quality">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<p>Plot 2: Data quality plot</p>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
@@ -85,6 +282,28 @@ grid-auto-rows: minmax(0, 1fr);">
     </span>
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
+</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-2"><div class="card-body html-fill-item html-fill-container" data-title="Performance indicators">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
+<div class="card-body html-fill-item html-fill-container">
+<div class="cell-output-display html-fill-item html-fill-container">
+<div class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item html-fill-container" id="plot_3" style="width:100%;height:400px;"></div>
+</div>
+</div>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+</div>
+</div></div></div><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
 </div></div><aside id="bslib-sidebar-1" class="sidebar html-fill-container html-fill-item"><div class="html-fill-item html-fill-container">
 <div class="cell-output-display no-overflow-x">
@@ -275,31 +494,16 @@ bslib.Sidebar.initCollapsibleAll()
 </script>
 </div>
 </div>
-<div id="performance" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-performance">
+<div id="hospital-summary" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-hospital-summary">
 <div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" style=" --bslib-sidebar-width: 25%"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
 <div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
 grid-auto-rows: minmax(0, 1fr);">
-<div class="card tabset html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-header bslib-navs-card-title"><div class="card-title html-fill-item html-fill-container"><span style="display: inline">
-
-</span></div><ul class="nav nav-tabs card-header-tabs" role="tablist" data-tabsetid="card-tabset-2"><li class="nav-item" role="presentation"><a href="#card-tabset-2-1" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Tab 1" aria-selected="true" class="nav-link active">Tab 1</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-2-2" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Tab 2" aria-selected="false" class="nav-link">Tab 2</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-2-3" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Data quality" aria-selected="false" class="nav-link">Data quality</a></li><li class="nav-item" role="presentation"><a href="#card-tabset-2-4" role="tab" data-toggle="tab" data-bs-toggle="tab" data-value="Performance indicators" aria-selected="false" class="nav-link">Performance indicators</a></li></ul></div>
-
-
-
-
-<div class="tab-content html-fill-item html-fill-container" data-tabset-id="card-tabset-2"><div class="tab-pane active show html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-1"><div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="reactable html-widget html-widget-output shiny-report-size html-fill-item html-fill-container" data-reactable-output="table_1" id="table_1" style="width:auto;height:auto;"></div>
-</div>
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-2"><div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="reactable html-widget html-widget-output shiny-report-size html-fill-item html-fill-container" data-reactable-output="outf6a28f6ea80e73c0" id="outf6a28f6ea80e73c0" style="width:auto;height:auto;"></div>
-</div>
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-3"><div class="card-body html-fill-item html-fill-container" data-title="Data quality">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
 <div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
 <div class="card-body html-fill-item html-fill-container">
-<p>Plot 2: Data quality plot</p>
+<p>Average Quarterly Case loads</p>
 </div>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
@@ -308,14 +512,53 @@ grid-auto-rows: minmax(0, 1fr);">
     </span>
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
-</div></div><div class="tab-pane html-fill-item html-fill-container" role="tabpanel" id="card-tabset-2-4"><div class="card-body html-fill-item html-fill-container" data-title="Performance indicators">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, 1fr); grid-auto-columns: minmax(0, 1fr);">
-<div class="card cell html-fill-item html-fill-container bslib-card" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-body html-fill-item html-fill-container">
-<div class="cell-output-display html-fill-item html-fill-container">
-<div class="plotly html-widget html-widget-output shiny-report-size shiny-report-theme html-fill-item html-fill-container" id="plot_3" style="width:100%;height:400px;"></div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr) minmax(3em, 1fr);
+grid-auto-rows: minmax(0, 1fr);">
+<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-primary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-hospital " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
+<path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Trust average</p>
+<p class="value-box-value">23 /qtr</p>
 </div>
 </div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-secondary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-geo-alt " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
+<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">Cancer alliance average</p>
+<p class="value-box-value">34 /qtr</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
+<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
+    <template>Expand</template>
+    <span class="bslib-full-screen-enter badge rounded-pill">
+        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
+    </span>
+</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-secondary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
+<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
+<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
+<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-globe " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path></svg></div>
+<div class="value-box-area html-fill-item html-fill-container">
+<p class="value-box-title">National average</p>
+<p class="value-box-value">23 /qtr</p>
+</div>
+</div>
+</div>
+<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
 <bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
     <template>Expand</template>
     <span class="bslib-full-screen-enter badge rounded-pill">
@@ -323,12 +566,13 @@ grid-auto-rows: minmax(0, 1fr);">
     </span>
 </bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
 </div>
-</div></div></div><bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
+<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: ;
+grid-auto-rows: minmax(0, 1fr);">
+<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
+
+</div>
+</div>
+</div>
 </div>
 </div></div><aside id="bslib-sidebar-2" class="sidebar html-fill-container html-fill-item"><div class="html-fill-item html-fill-container">
 <div class="cell-output-display no-overflow-x">
@@ -484,269 +728,8 @@ grid-auto-rows: minmax(0, 1fr);">
 </div>
 </div>
 </div>
-<div class="cell-output-display no-overflow-x">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="audit_name_full-label" for="audit_name_full">Select Cancer Audit</label>
-<div>
-<select id="audit_name_full" class="shiny-input-select"><option value="National Audit of Metastatic Breast Cancer" selected="">National Audit of Metastatic Breast Cancer</option>
-<option value="National Audit of Primary Breast Cancer">National Audit of Primary Breast Cancer</option>
-<option value="National Bowel Cancer Audit">National Bowel Cancer Audit</option>
-<option value="National Kidney Cancer Audit">National Kidney Cancer Audit</option>
-<option value="National Non-Hodgkin Lymphoma Audit">National Non-Hodgkin Lymphoma Audit</option>
-<option value="National Ovarian Cancer Audit">National Ovarian Cancer Audit</option>
-<option value="National Oesophago-Gastric Cancer Audit">National Oesophago-Gastric Cancer Audit</option>
-<option value="National Pancreatic Cancer Audit">National Pancreatic Cancer Audit</option></select>
-<script type="application/json" data-for="audit_name_full" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
-</div>
-</div>
-</div>
 </div></aside>
 <button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-2">
-    <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="fill:currentColor;" aria-hidden="true" role="img">
-      <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
-    </svg>
-</button>
-<script data-bslib-sidebar-init="">
-bslib.Sidebar.initCollapsibleAll()
-</script>
-</div>
-</div>
-<div id="hospital-summary" class="dashboard-page tab-pane grid-skip html-fill-item html-fill-container dashboard-sidebar-container" data-orientation="rows" aria-labelledby="tab-hospital-summary">
-<div class="bslib-sidebar-layout html-fill-item html-fill-container" data-bslib-sidebar-open="desktop" data-bslib-sidebar-init="true" style=" --bslib-sidebar-width: 25%"><div class="main html-fill-container html-fill-item"><div class="sidebar-content html-fill-item html-fill-container">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-rows: minmax(3em, max-content) minmax(3em, max-content) minmax(3em, max-content); grid-auto-columns: minmax(0, 1fr);">
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card html-fill-item html-fill-container bslib-card" data-fill="false" data-bslib-card-init="" data-require-bs-caller="card()" data-full-screen="false">
-<div class="card-body html-fill-item html-fill-container">
-<p>Average Quarterly Case loads</p>
-</div>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: minmax(3em, 1fr) minmax(3em, 1fr) minmax(3em, 1fr);
-grid-auto-rows: minmax(0, 1fr);">
-<div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-primary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
-<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
-<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
-<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-hospital " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M8.5 5.034v1.1l.953-.55.5.867L9 7l.953.55-.5.866-.953-.55v1.1h-1v-1.1l-.953.55-.5-.866L7 7l-.953-.55.5-.866.953.55v-1.1h1ZM13.25 9a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM13 11.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Zm.25 1.75a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5Zm-11-4a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5A.25.25 0 0 0 3 9.75v-.5A.25.25 0 0 0 2.75 9h-.5Zm0 2a.25.25 0 0 0-.25.25v.5c0 .138.112.25.25.25h.5a.25.25 0 0 0 .25-.25v-.5a.25.25 0 0 0-.25-.25h-.5ZM2 13.25a.25.25 0 0 1 .25-.25h.5a.25.25 0 0 1 .25.25v.5a.25.25 0 0 1-.25.25h-.5a.25.25 0 0 1-.25-.25v-.5Z"></path>
-<path d="M5 1a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1a1 1 0 0 1 1 1v4h3a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1h3V3a1 1 0 0 1 1-1V1Zm2 14h2v-3H7v3Zm3 0h1V3H5v12h1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3Zm0-14H6v1h4V1Zm2 7v7h3V8h-3Zm-8 7V8H1v7h3Z"></path></svg></div>
-<div class="value-box-area html-fill-item html-fill-container">
-<p class="value-box-title">Trust average</p>
-<p class="value-box-value">23 /qtr</p>
-</div>
-</div>
-</div>
-<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-secondary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
-<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
-<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
-<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-geo-alt " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"></path>
-<path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"></path></svg></div>
-<div class="value-box-area html-fill-item html-fill-container">
-<p class="value-box-title">Cancer alliance average</p>
-<p class="value-box-value">34 /qtr</p>
-</div>
-</div>
-</div>
-<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div><div class="card bslib-card bslib-mb-spacing html-fill-item html-fill-container bslib-value-box bg-secondary showcase-left-center" data-bslib-card-init="" data-require-bs-caller="card()" data-require-bs-version="5 5" data-full-screen="false">
-<div class="card-body bslib-gap-spacing html-fill-item html-fill-container" style="margin-top:auto;margin-bottom:auto;flex:1 1 auto; padding:0;">
-<div class="value-box-grid html-fill-item" style="--bslib-grid-height:auto;--bslib-grid-height-mobile:auto;---bslib-value-box-showcase-w:30%;---bslib-value-box-showcase-w-fs:1fr;---bslib-value-box-showcase-max-h:100px;---bslib-value-box-showcase-max-h-fs:67%;">
-<div class="value-box-showcase html-fill-item html-fill-container"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-globe " style="height:1em;width:1em;fill:currentColor;vertical-align:-0.125em;" aria-hidden="true" role="img"><path d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm7.5-6.923c-.67.204-1.335.82-1.887 1.855A7.97 7.97 0 0 0 5.145 4H7.5V1.077zM4.09 4a9.267 9.267 0 0 1 .64-1.539 6.7 6.7 0 0 1 .597-.933A7.025 7.025 0 0 0 2.255 4H4.09zm-.582 3.5c.03-.877.138-1.718.312-2.5H1.674a6.958 6.958 0 0 0-.656 2.5h2.49zM4.847 5a12.5 12.5 0 0 0-.338 2.5H7.5V5H4.847zM8.5 5v2.5h2.99a12.495 12.495 0 0 0-.337-2.5H8.5zM4.51 8.5a12.5 12.5 0 0 0 .337 2.5H7.5V8.5H4.51zm3.99 0V11h2.653c.187-.765.306-1.608.338-2.5H8.5zM5.145 12c.138.386.295.744.468 1.068.552 1.035 1.218 1.65 1.887 1.855V12H5.145zm.182 2.472a6.696 6.696 0 0 1-.597-.933A9.268 9.268 0 0 1 4.09 12H2.255a7.024 7.024 0 0 0 3.072 2.472zM3.82 11a13.652 13.652 0 0 1-.312-2.5h-2.49c.062.89.291 1.733.656 2.5H3.82zm6.853 3.472A7.024 7.024 0 0 0 13.745 12H11.91a9.27 9.27 0 0 1-.64 1.539 6.688 6.688 0 0 1-.597.933zM8.5 12v2.923c.67-.204 1.335-.82 1.887-1.855.173-.324.33-.682.468-1.068H8.5zm3.68-1h2.146c.365-.767.594-1.61.656-2.5h-2.49a13.65 13.65 0 0 1-.312 2.5zm2.802-3.5a6.959 6.959 0 0 0-.656-2.5H12.18c.174.782.282 1.623.312 2.5h2.49zM11.27 2.461c.247.464.462.98.64 1.539h1.835a7.024 7.024 0 0 0-3.072-2.472c.218.284.418.598.597.933zM10.855 4a7.966 7.966 0 0 0-.468-1.068C9.835 1.897 9.17 1.282 8.5 1.077V4h2.355z"></path></svg></div>
-<div class="value-box-area html-fill-item html-fill-container">
-<p class="value-box-title">National average</p>
-<p class="value-box-value">23 /qtr</p>
-</div>
-</div>
-</div>
-<script data-bslib-card-init="">bslib.Card.initializeAllCards();</script>
-<bslib-tooltip placement="auto" bsoptions="[]" data-require-bs-version="5" data-require-bs-caller="tooltip()">
-    <template>Expand</template>
-    <span class="bslib-full-screen-enter badge rounded-pill">
-        <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 24 24" style="height:1em;width:1em;" aria-hidden="true" role="img"><path d="M20 5C20 4.4 19.6 4 19 4H13C12.4 4 12 3.6 12 3C12 2.4 12.4 2 13 2H21C21.6 2 22 2.4 22 3V11C22 11.6 21.6 12 21 12C20.4 12 20 11.6 20 11V5ZM4 19C4 19.6 4.4 20 5 20H11C11.6 20 12 20.4 12 21C12 21.6 11.6 22 11 22H3C2.4 22 2 21.6 2 21V13C2 12.4 2.4 12 3 12C3.6 12 4 12.4 4 13V19Z"></path></svg>
-    </span>
-</bslib-tooltip><script data-bslib-card-init="">bslib.Card.initializeAllCards();</script></div>
-</div>
-<div class="html-fill-item html-fill-container bslib-grid" style="display: grid; grid-template-columns: ;
-grid-auto-rows: minmax(0, 1fr);">
-<div id="3ade8a4a-fb1d-4a6c-8409-ac45482d5fc9" class="hidden html-fill-item html-fill-container">
-
-</div>
-</div>
-</div>
-</div>
-</div></div><aside id="bslib-sidebar-3" class="sidebar html-fill-container html-fill-item"><div class="html-fill-item html-fill-container">
-<div class="cell-output-display no-overflow-x">
-<div class="form-group shiny-input-container">
-<label class="control-label" id="trust_name-label" for="trust_name">Select hospital:</label>
-<div>
-<select id="trust_name" class="shiny-input-select"><option value="Airedale NHS Foundation Trust" selected="">Airedale NHS Foundation Trust</option>
-<option value="Ashford and St Peters Hospitals NHS Foundation Trust">Ashford and St Peters Hospitals NHS Foundation Trust</option>
-<option value="Barking, Havering and Redbridge University Hospitals NHS Trust">Barking, Havering and Redbridge University Hospitals NHS Trust</option>
-<option value="Barnsley Hospital NHS Foundation Trust">Barnsley Hospital NHS Foundation Trust</option>
-<option value="Barts Health NHS Trust">Barts Health NHS Trust</option>
-<option value="Bedfordshire Hospitals NHS Foundation Trust">Bedfordshire Hospitals NHS Foundation Trust</option>
-<option value="Blackpool Teaching Hospitals NHS Foundation Trust">Blackpool Teaching Hospitals NHS Foundation Trust</option>
-<option value="Bolton NHS Foundation Trust">Bolton NHS Foundation Trust</option>
-<option value="Bradford Teaching Hospitals NHS Foundation Trust">Bradford Teaching Hospitals NHS Foundation Trust</option>
-<option value="Buckinghamshire Healthcare NHS Trust">Buckinghamshire Healthcare NHS Trust</option>
-<option value="Calderdale and Huddersfield NHS Foundation Trust">Calderdale and Huddersfield NHS Foundation Trust</option>
-<option value="Cambridge University Hospitals NHS Foundation Trust">Cambridge University Hospitals NHS Foundation Trust</option>
-<option value="Chelsea and Westminster Hospital NHS Foundation Trust">Chelsea and Westminster Hospital NHS Foundation Trust</option>
-<option value="Chesterfield Royal Hospital NHS Foundation Trust">Chesterfield Royal Hospital NHS Foundation Trust</option>
-<option value="Countess of Chester Hospital NHS Foundation Trust">Countess of Chester Hospital NHS Foundation Trust</option>
-<option value="County Durham and Darlington NHS Foundation Trust">County Durham and Darlington NHS Foundation Trust</option>
-<option value="Croydon Health Services NHS Trust">Croydon Health Services NHS Trust</option>
-<option value="Dartford and Gravesham NHS Trust">Dartford and Gravesham NHS Trust</option>
-<option value="Doncaster and Bassetlaw Teaching Hospitals NHS Foundation Trust">Doncaster and Bassetlaw Teaching Hospitals NHS Foundation Trust</option>
-<option value="Dorset County Hospital NHS Foundation Trust">Dorset County Hospital NHS Foundation Trust</option>
-<option value="Dudley Group NHS Foundation Trust">Dudley Group NHS Foundation Trust</option>
-<option value="East Cheshire NHS Trust">East Cheshire NHS Trust</option>
-<option value="East Kent Hospitals University NHS Foundation Trust">East Kent Hospitals University NHS Foundation Trust</option>
-<option value="East Lancashire Hospitals NHS Trust">East Lancashire Hospitals NHS Trust</option>
-<option value="East Suffolk and North Essex NHS Foundation Trust">East Suffolk and North Essex NHS Foundation Trust</option>
-<option value="East Sussex Healthcare NHS Trust">East Sussex Healthcare NHS Trust</option>
-<option value="East and North Hertfordshire NHS Trust">East and North Hertfordshire NHS Trust</option>
-<option value="Frimley Health NHS Foundation Trust">Frimley Health NHS Foundation Trust</option>
-<option value="Gateshead Health NHS Foundation Trust">Gateshead Health NHS Foundation Trust</option>
-<option value="George Eliot Hospital NHS Trust">George Eliot Hospital NHS Trust</option>
-<option value="Gloucestershire Hospitals NHS Foundation Trust">Gloucestershire Hospitals NHS Foundation Trust</option>
-<option value="Great Western Hospitals NHS Foundation Trust">Great Western Hospitals NHS Foundation Trust</option>
-<option value="Guy's and St Thomas' NHS Foundation Trust">Guy's and St Thomas' NHS Foundation Trust</option>
-<option value="Hampshire Hospitals NHS Foundation Trust">Hampshire Hospitals NHS Foundation Trust</option>
-<option value="Harrogate and District NHS Foundation Trust">Harrogate and District NHS Foundation Trust</option>
-<option value="Hillingdon Hospitals NHS Foundation Trust">Hillingdon Hospitals NHS Foundation Trust</option>
-<option value="Hull University Teaching Hospitals NHS Trust">Hull University Teaching Hospitals NHS Trust</option>
-<option value="Imperial College Healthcare NHS Trust">Imperial College Healthcare NHS Trust</option>
-<option value="Isle of Wight NHS Trust">Isle of Wight NHS Trust</option>
-<option value="James Paget University Hospitals NHS Foundation Trust">James Paget University Hospitals NHS Foundation Trust</option>
-<option value="Kettering General Hospital NHS Foundation Trust">Kettering General Hospital NHS Foundation Trust</option>
-<option value="Kings College Hospital NHS Foundation Trust">Kings College Hospital NHS Foundation Trust</option>
-<option value="Kingston Hospital NHS Foundation Trust">Kingston Hospital NHS Foundation Trust</option>
-<option value="Lancashire Teaching Hospitals NHS Foundation Trust">Lancashire Teaching Hospitals NHS Foundation Trust</option>
-<option value="Leeds Teaching Hospitals NHS Trust">Leeds Teaching Hospitals NHS Trust</option>
-<option value="Lewisham and Greenwich NHS Trust">Lewisham and Greenwich NHS Trust</option>
-<option value="Liverpool University Hospitals NHS Foundation Trust">Liverpool University Hospitals NHS Foundation Trust</option>
-<option value="London North West University Healthcare NHS Trust">London North West University Healthcare NHS Trust</option>
-<option value="Maidstone and Tunbridge Wells NHS Trust">Maidstone and Tunbridge Wells NHS Trust</option>
-<option value="Manchester University NHS Foundation Trust">Manchester University NHS Foundation Trust</option>
-<option value="Medway NHS Foundation Trust">Medway NHS Foundation Trust</option>
-<option value="Mersey and West Lancashire Teaching Hospitals NHS Trust">Mersey and West Lancashire Teaching Hospitals NHS Trust</option>
-<option value="Mid Cheshire Hospitals NHS Foundation Trust">Mid Cheshire Hospitals NHS Foundation Trust</option>
-<option value="Mid Yorkshire Teaching NHS Trust">Mid Yorkshire Teaching NHS Trust</option>
-<option value="Mid and South Essex NHS Foundation Trust">Mid and South Essex NHS Foundation Trust</option>
-<option value="Milton Keynes University Hospital NHS Foundation Trust">Milton Keynes University Hospital NHS Foundation Trust</option>
-<option value="Newcastle Upon Tyne Hospitals NHS Foundation Trust">Newcastle Upon Tyne Hospitals NHS Foundation Trust</option>
-<option value="Norfolk and Norwich University Hospitals NHS Foundation Trust">Norfolk and Norwich University Hospitals NHS Foundation Trust</option>
-<option value="North Bristol NHS Trust">North Bristol NHS Trust</option>
-<option value="North Cumbria Integrated Care NHS Foundation Trust">North Cumbria Integrated Care NHS Foundation Trust</option>
-<option value="North Middlesex University Hospital NHS Trust">North Middlesex University Hospital NHS Trust</option>
-<option value="North Tees and Hartlepool NHS Foundation Trust">North Tees and Hartlepool NHS Foundation Trust</option>
-<option value="North West Anglia NHS Foundation Trust">North West Anglia NHS Foundation Trust</option>
-<option value="Northampton General Hospital NHS Trust">Northampton General Hospital NHS Trust</option>
-<option value="Northern Care Alliance NHS Foundation Trust">Northern Care Alliance NHS Foundation Trust</option>
-<option value="Northern Lincolnshire and Goole NHS Foundation Trust">Northern Lincolnshire and Goole NHS Foundation Trust</option>
-<option value="Northumbria Healthcare NHS Foundation Trust">Northumbria Healthcare NHS Foundation Trust</option>
-<option value="Nottingham University Hospitals NHS Trust">Nottingham University Hospitals NHS Trust</option>
-<option value="Oxford University Hospitals NHS Foundation Trust">Oxford University Hospitals NHS Foundation Trust</option>
-<option value="Portsmouth Hospitals University NHS Trust">Portsmouth Hospitals University NHS Trust</option>
-<option value="Princess Alexandra Hospital NHS Trust">Princess Alexandra Hospital NHS Trust</option>
-<option value="Queen Elizabeth Hospital, Kings Lynn, NHS Foundation Trust">Queen Elizabeth Hospital, Kings Lynn, NHS Foundation Trust</option>
-<option value="Rotherham NHS Foundation Trust">Rotherham NHS Foundation Trust</option>
-<option value="Royal Berkshire NHS Foundation Trust">Royal Berkshire NHS Foundation Trust</option>
-<option value="Royal Cornwall Hospitals NHS Trust">Royal Cornwall Hospitals NHS Trust</option>
-<option value="Royal Devon University Healthcare NHS Foundation Trust">Royal Devon University Healthcare NHS Foundation Trust</option>
-<option value="Royal Free London NHS Foundation Trust">Royal Free London NHS Foundation Trust</option>
-<option value="Royal Marsden NHS Foundation Trust">Royal Marsden NHS Foundation Trust</option>
-<option value="Royal Surrey County Hospital NHS Foundation Trust">Royal Surrey County Hospital NHS Foundation Trust</option>
-<option value="Royal United Hospitals Bath NHS Foundation Trust">Royal United Hospitals Bath NHS Foundation Trust</option>
-<option value="Royal Wolverhampton NHS Trust">Royal Wolverhampton NHS Trust</option>
-<option value="Salisbury NHS Foundation Trust">Salisbury NHS Foundation Trust</option>
-<option value="Sandwell and West Birmingham Hospitals NHS Trust">Sandwell and West Birmingham Hospitals NHS Trust</option>
-<option value="Sheffield Teaching Hospitals NHS Foundation Trust">Sheffield Teaching Hospitals NHS Foundation Trust</option>
-<option value="Sherwood Forest Hospitals NHS Foundation Trust">Sherwood Forest Hospitals NHS Foundation Trust</option>
-<option value="Shrewsbury and Telford Hospital NHS Trust">Shrewsbury and Telford Hospital NHS Trust</option>
-<option value="Somerset NHS Foundation Trust">Somerset NHS Foundation Trust</option>
-<option value="South Tees Hospitals NHS Foundation Trust">South Tees Hospitals NHS Foundation Trust</option>
-<option value="South Warwickshire University NHS Foundation Trust">South Warwickshire University NHS Foundation Trust</option>
-<option value="St Georges University Hospitals NHS Foundation Trust">St Georges University Hospitals NHS Foundation Trust</option>
-<option value="Surrey and Sussex Healthcare NHS Trust">Surrey and Sussex Healthcare NHS Trust</option>
-<option value="Tameside and Glossop Integrated Care NHS Foundation Trust">Tameside and Glossop Integrated Care NHS Foundation Trust</option>
-<option value="Torbay and South Devon NHS Foundation Trust">Torbay and South Devon NHS Foundation Trust</option>
-<option value="United Lincolnshire Hospitals NHS Trust">United Lincolnshire Hospitals NHS Trust</option>
-<option value="University College London Hospitals NHS Foundation Trust">University College London Hospitals NHS Foundation Trust</option>
-<option value="University Hospital Southampton NHS Foundation Trust">University Hospital Southampton NHS Foundation Trust</option>
-<option value="University Hospitals Birmingham NHS Foundation Trust">University Hospitals Birmingham NHS Foundation Trust</option>
-<option value="University Hospitals Coventry and Warwickshire NHS Trust">University Hospitals Coventry and Warwickshire NHS Trust</option>
-<option value="University Hospitals Dorset NHS Foundation Trust">University Hospitals Dorset NHS Foundation Trust</option>
-<option value="University Hospitals Plymouth NHS Trust">University Hospitals Plymouth NHS Trust</option>
-<option value="University Hospitals Sussex NHS Foundation Trust">University Hospitals Sussex NHS Foundation Trust</option>
-<option value="University Hospitals of Derby and Burton NHS Foundation Trust">University Hospitals of Derby and Burton NHS Foundation Trust</option>
-<option value="University Hospitals of Leicester NHS Trust">University Hospitals of Leicester NHS Trust</option>
-<option value="University Hospitals of Morecambe Bay NHS Foundation Trust">University Hospitals of Morecambe Bay NHS Foundation Trust</option>
-<option value="University Hospitals of North Midlands NHS Trust">University Hospitals of North Midlands NHS Trust</option>
-<option value="Walsall Healthcare NHS Trust">Walsall Healthcare NHS Trust</option>
-<option value="Warrington and Halton Teaching Hospitals NHS Foundation Trust">Warrington and Halton Teaching Hospitals NHS Foundation Trust</option>
-<option value="West Hertfordshire Teaching Hospitals NHS Trust">West Hertfordshire Teaching Hospitals NHS Trust</option>
-<option value="West Suffolk NHS Foundation Trust">West Suffolk NHS Foundation Trust</option>
-<option value="Whittington Health NHS Trust">Whittington Health NHS Trust</option>
-<option value="Wirral University Teaching Hospital NHS Foundation Trust">Wirral University Teaching Hospital NHS Foundation Trust</option>
-<option value="Worcestershire Acute Hospitals NHS Trust">Worcestershire Acute Hospitals NHS Trust</option>
-<option value="Wrightington, Wigan and Leigh NHS Foundation Trust">Wrightington, Wigan and Leigh NHS Foundation Trust</option>
-<option value="Wye Valley NHS Trust">Wye Valley NHS Trust</option>
-<option value="York and Scarborough Teaching Hospitals NHS Foundation Trust">York and Scarborough Teaching Hospitals NHS Foundation Trust</option>
-<option value="Ashford and St Peter's Hospitals NHS Foundation Trust">Ashford and St Peter's Hospitals NHS Foundation Trust</option>
-<option value="Christie NHS Foundation Trust">Christie NHS Foundation Trust</option>
-<option value="Clatterbridge Cancer Centre NHS Foundation Trust">Clatterbridge Cancer Centre NHS Foundation Trust</option>
-<option value="Countess Of Chester Hospital NHS Foundation Trust">Countess Of Chester Hospital NHS Foundation Trust</option>
-<option value="Epsom and St Helier University Hospitals NHS Trust">Epsom and St Helier University Hospitals NHS Trust</option>
-<option value="Homerton Healthcare NHS Foundation Trust">Homerton Healthcare NHS Foundation Trust</option>
-<option value="Isle Of Wight NHS Trust">Isle Of Wight NHS Trust</option>
-<option value="King's College Hospital NHS Foundation Trust">King's College Hospital NHS Foundation Trust</option>
-<option value="Mersey And West Lancashire Teaching Hospitals NHS Trust">Mersey And West Lancashire Teaching Hospitals NHS Trust</option>
-<option value="Queen Elizabeth Hospital, King's Lynn, NHS Foundation Trust">Queen Elizabeth Hospital, King's Lynn, NHS Foundation Trust</option>
-<option value="South Tyneside and Sunderland NHS Foundation Trust">South Tyneside and Sunderland NHS Foundation Trust</option>
-<option value="St George's University Hospitals NHS Foundation Trust">St George's University Hospitals NHS Foundation Trust</option>
-<option value="Stockport NHS Foundation Trust">Stockport NHS Foundation Trust</option>
-<option value="United Lincolnshire Teaching Hospitals NHS Trust">United Lincolnshire Teaching Hospitals NHS Trust</option>
-<option value="University Hospitals Bristol and Weston NHS Foundation Trust">University Hospitals Bristol and Weston NHS Foundation Trust</option>
-<option value="University Hospitals Of Derby and Burton NHS Foundation Trust">University Hospitals Of Derby and Burton NHS Foundation Trust</option>
-<option value="University Hospitals Of Leicester NHS Trust">University Hospitals Of Leicester NHS Trust</option>
-<option value="University Hospitals Of Morecambe Bay NHS Foundation Trust">University Hospitals Of Morecambe Bay NHS Foundation Trust</option>
-<option value="University Hospitals Of North Midlands NHS Trust">University Hospitals Of North Midlands NHS Trust</option>
-<option value="Liverpool Heart and Chest Hospital NHS Foundation Trust">Liverpool Heart and Chest Hospital NHS Foundation Trust</option>
-<option value="Moorfields Eye Hospital NHS Foundation Trust">Moorfields Eye Hospital NHS Foundation Trust</option>
-<option value="North East London NHS Foundation Trust">North East London NHS Foundation Trust</option>
-<option value="Queen Victoria Hospital NHS Foundation Trust">Queen Victoria Hospital NHS Foundation Trust</option>
-<option value="Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust">Robert Jones and Agnes Hunt Orthopaedic Hospital NHS Foundation Trust</option>
-<option value="Royal National Orthopaedic Hospital NHS Trust">Royal National Orthopaedic Hospital NHS Trust</option>
-<option value="Royal Orthopaedic Hospital NHS Foundation Trust">Royal Orthopaedic Hospital NHS Foundation Trust</option>
-<option value="Royal Papworth Hospital NHS Foundation Trust">Royal Papworth Hospital NHS Foundation Trust</option>
-<option value="The Walton Centre NHS Foundation Trust">The Walton Centre NHS Foundation Trust</option>
-<option value="Liverpool Women's NHS Foundation Trust">Liverpool Women's NHS Foundation Trust</option>
-<option value="Birmingham Women's and Children's NHS Foundation Trust">Birmingham Women's and Children's NHS Foundation Trust</option></select>
-<script type="application/json" data-for="trust_name" data-nonempty="">{"plugins":["selectize-plugin-a11y"]}</script>
-</div>
-</div>
-</div>
-</div></aside>
-<button class="collapse-toggle" type="button" title="Toggle sidebar" aria-expanded="true" aria-controls="bslib-sidebar-3">
     <svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 16 16" class="bi bi-chevron-left collapse-icon" style="fill:currentColor;" aria-hidden="true" role="img">
       <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"></path>
     </svg>
@@ -774,11 +757,143 @@ library(tidyverse)
 # Loading in plot data
 indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
-plot_1_data<-read_csv("../data/processed_data/plot1.csv")
+plot1<-read_csv("../data/processed_data/plot1.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
 audit_list <- unique(indicators_trust$audit_name_full)
 quarter_list <- unique(indicators_trust$quarter_year)
+</script>
+ 
+<script type="application/shiny-prerendered" data-context="server">
+reactableOutput("table_1")
+
+
+# Reactive dataset based on user input for Plot 1
+plot_1_dataset <- reactive({
+  req(input$trust_name, input$quarter_year)  # Ensure inputs exist
+  
+  plot1 %>%
+    filter(trust_name == input$trust_name & quarter_year == input$quarter_year)
+})
+
+#function for colour coding
+get_color_2 <- function(value, metric_type) {
+  if (is.na(value)) return("#808080")  # Default color for NA (gray)
+  
+  # Define color scales (color-blind friendly)
+  red_palette <- hcl.colors(10, "Red-Blue", rev = TRUE)  # Light to dark red
+  green_palette <- hcl.colors(10, "TealGrn", rev = TRUE)
+  
+  # Reverse logic if metric_type = 0
+  if (metric_type == 0) {
+    temp <- red_palette
+    red_palette <- green_palette
+    green_palette <- temp
+  }
+  
+  # Compute the scaling for red (negative values)
+  if (value < 0) {
+    if (value >= -10) {
+      color_index <- 2  # Light orange for values between 0 and -10
+    } else if (value >= -20) {
+      color_index <- 6  # Medium orange for values between -10 and -20
+    } else {
+      color_index <- 10  # Dark orange for values less than -20
+    }
+    return(red_palette[color_index])  # Use red gradient with specified index
+  }
+  
+  # Compute the scaling for green (positive values)
+  if (value > 0) {
+    if (value >= 10) {
+      color_index <- 2  # Light green for values between 0 and 10
+    } else if (value >= 20) {
+      color_index <- 6  # Medium green for values between -10 and 20
+    } else {
+      color_index <- 10  # Dark green for values less than 20
+    }
+    return(green_palette[color_index]) 
+  }
+  
+  # Neutral color for 0
+  return("white")
+}
+
+output$table_1<-renderReactable({reactable(plot_1_dataset(),
+                  filterable = TRUE,
+                  searchable = TRUE,
+                  columns = list(
+                    audit=colDef(show=FALSE),
+                    trust_code=colDef(show=FALSE),
+                    trust_name=colDef(show=FALSE),
+                    quarter_year=colDef(show=FALSE),
+                    audit_name_full = colDef(show=FALSE),
+                    RowType = colDef(show = FALSE),
+                    metric_name = colDef(
+                      name = "Metric Name",
+                      cell = function(value, index) {
+                        data <- plot_1_dataset()
+                        if (data$RowType[index] == "Header") {
+                          return(data$audit_name_full[index])
+                        } else {
+                          return(value)
+                        }
+                      }
+                    ),
+                    denominator = colDef(name="Case Volume",
+                                         cell = function(value, index) {
+                                                    data <- plot_1_dataset()
+                                                    if (data[index, "RowType"] == "Header") {                                                                 return("")  # Blank for header rows
+                                                  } else {
+                                                 return(sprintf("%.2f", as.numeric(value)))
+                                           }
+                                         }
+                                      ),
+                    mav = colDef(name = "Current Quarter Moving Average Performance (%)",
+                                  cell = function(value, index) {
+                                                    data <- plot_1_dataset()
+                                                    if (data[index, "RowType"] == "Header") {  # Correct indexing method
+                                                  return("")  # Blank for header rows
+                                                  } else {
+                                                 return(sprintf("%.2f", as.numeric(value)))
+                                 
+                                   }
+                                  }
+                                ),
+                     variance = colDef(name="Comparison to National Performance (%)",
+                                      cell = function(value, index) {
+                                        data <- plot_1_dataset()
+                                        if (data[index, "RowType"] == "Header") {  
+                                         return("")  # Empty cell for header rows
+                                        } else {
+                                        metric_type <- data[index, "metric_type"]  
+
+                                       color <- get_color_2(as.numeric(value), metric_type)  # Ensure numeric formatting
+                                      return(htmltools::div(
+                                             style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
+                                             round(as.numeric(value), 2)  # Round for better readability
+                                          ))
+                                        }
+                                      }
+                    ),
+                    variance_prev_quarter = colDef( name="Comparison to Previous Quarter Performance (%)",
+                                                    cell = function(value, index) {
+                                                       data <- plot_1_dataset()
+                                                      if (data[index, "RowType"] == "Header") {  
+                                                          return("")  # Empty cell for header rows
+                                                              } else {
+                                                       metric_type <- data[index, "metric_type"]  
+                                                 color <- get_color_2(as.numeric(value), metric_type) 
+                                                         return(htmltools::div(
+                                               style = paste("background-color:", color, "; padding: 8px; border-radius:                                                                  4px;"),
+                                                  round(as.numeric(value), 2) # Round for better readability
+                                                        ))
+                                                      }
+                                                    }
+                                                  )
+                  )
+                )
+             })
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -860,12 +975,12 @@ ojs_define <- function(..., .session = shiny::getDefaultReactiveDomain()) {
 </p>
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="dependencies">
-{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["core-js"]},{"type":"character","attributes":{},"value":["2.5.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/core-js"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["shim.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["react"]},{"type":"character","attributes":{},"value":["18.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/react"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["react.min.js","react-dom.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactwidget"]},{"type":"character","attributes":{},"value":["2.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/react-tools"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["react-tools.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactable"]},{"type":"character","attributes":{},"value":["0.4.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.4.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactable-binding"]},{"type":"character","attributes":{},"value":["0.4.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.4.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["core-js"]},{"type":"character","attributes":{},"value":["2.5.3"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/core-js"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["shim.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["react"]},{"type":"character","attributes":{},"value":["18.2.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/react"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["react.min.js","react-dom.min.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactwidget"]},{"type":"character","attributes":{},"value":["2.0.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/react-tools"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["react-tools.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactR"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.6.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactable"]},{"type":"character","attributes":{},"value":["0.4.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.4.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["reactable-binding"]},{"type":"character","attributes":{},"value":["0.4.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["reactable"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["0.4.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]}]}
+{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"character","attributes":{},"value":["1.6.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmlwidgets"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.6.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["plotly-binding"]},{"type":"character","attributes":{},"value":["4.10.4"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["htmlwidgets"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["plotly"]},{"type":"logical","attributes":{},"value":[false]},{"type":"character","attributes":{},"value":["4.10.4"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["selectize"]},{"type":"character","attributes":{},"value":["0.15.2"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["www/shared/selectize"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["js/selectize.min.js","accessibility/js/selectize-plugin-a11y.min.js"]},{"type":"character","attributes":{},"value":["css/selectize.bootstrap3.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["shiny"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["1.10.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["htmltools-fill"]},{"type":"character","attributes":{},"value":["0.5.8.1"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["fill"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["fill.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["htmltools"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.5.8.1"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-js"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src"]}},"value":[{"type":"character","attributes":{},"value":["components.min.js"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["src","type"]}},"value":[{"type":"character","attributes":{},"value":["web-components.min.js"]},{"type":"character","attributes":{},"value":["module"]}]}]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-component-css"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components/dist"]}]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["components.css"]},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","version","src","meta","script","stylesheet","head","attachment","package","all_files","pkgVersion"]},"class":{"type":"character","attributes":{},"value":["html_dependency"]}},"value":[{"type":"character","attributes":{},"value":["bslib-tag-require"]},{"type":"character","attributes":{},"value":["0.8.0"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["file"]}},"value":[{"type":"character","attributes":{},"value":["components"]}]},{"type":"NULL"},{"type":"character","attributes":{},"value":["tag-require.js"]},{"type":"NULL"},{"type":"NULL"},{"type":"NULL"},{"type":"character","attributes":{},"value":["bslib"]},{"type":"logical","attributes":{},"value":[true]},{"type":"character","attributes":{},"value":["0.8.0"]}]}]}
 </script>
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76]}},"value":[{"type":"character","attributes":{},"value":["base","bit","bit64","bsicons","bslib","cachem","cli","colorspace","compiler","crayon","data.table","datasets","digest","dplyr","evaluate","fastmap","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","later","lazyeval","lifecycle","lubridate","magrittr","memoise","methods","mime","munsell","parallel","pillar","pkgconfig","plotly","promises","purrr","R6","Rcpp","reactable","reactR","readr","rlang","rmarkdown","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","viridisLite","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.4.2","4.0.5","4.0.5","0.1.2","0.8.0","1.1.0","3.6.3","2.1-1","4.4.2","1.5.3","1.16.0","4.4.2","0.6.37","1.1.4","1.0.3","1.2.0","1.0.0","0.1.3","3.5.1","1.8.0","4.4.2","4.4.2","4.4.2","0.3.6","1.1.3","0.5.8.1","1.6.4","1.6.15","1.4.7","0.1.4","1.8.8","1.49","1.3.2","0.2.2","1.0.4","1.9.3","2.0.3","2.0.1","4.4.2","0.12","0.5.1","4.4.2","1.10.1","2.0.3","4.10.4","1.3.2","1.0.2","2.5.1","1.0.13","0.4.4","0.6.1","2.1.5","1.1.4","2.29","0.16.0","0.4.9","1.3.0","1.10.0","4.4.2","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.2","0.4.0","4.4.2","0.6.5","0.4.2","1.6.5","3.0.2","0.49","1.8-4","2.3.10"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75]}},"value":[{"type":"character","attributes":{},"value":["base","bit","bit64","bsicons","bslib","cachem","cli","colorspace","compiler","crayon","data.table","datasets","digest","dplyr","evaluate","fastmap","forcats","generics","ggplot2","glue","graphics","grDevices","grid","gtable","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","later","lazyeval","lifecycle","lubridate","magrittr","memoise","methods","mime","munsell","parallel","pillar","pkgconfig","plotly","promises","purrr","R6","Rcpp","reactable","readr","rlang","rmarkdown","rstudioapi","sass","scales","shiny","stats","stringi","stringr","tibble","tidyr","tidyselect","tidyverse","timechange","tools","tzdb","utils","vctrs","viridisLite","vroom","withr","xfun","xtable","yaml"]},{"type":"character","attributes":{},"value":["4.4.2","4.0.5","4.0.5","0.1.2","0.8.0","1.1.0","3.6.3","2.1-1","4.4.2","1.5.3","1.16.0","4.4.2","0.6.37","1.1.4","1.0.3","1.2.0","1.0.0","0.1.3","3.5.1","1.8.0","4.4.2","4.4.2","4.4.2","0.3.6","1.1.3","0.5.8.1","1.6.4","1.6.15","1.4.7","0.1.4","1.8.8","1.49","1.3.2","0.2.2","1.0.4","1.9.3","2.0.3","2.0.1","4.4.2","0.12","0.5.1","4.4.2","1.10.1","2.0.3","4.10.4","1.3.2","1.0.2","2.5.1","1.0.13","0.4.4","2.1.5","1.1.4","2.29","0.16.0","0.4.9","1.3.0","1.10.0","4.4.2","1.8.4","1.5.1","3.2.1","1.3.1","1.2.1","2.0.0","0.3.0","4.4.2","0.4.0","4.4.2","0.6.5","0.4.2","1.6.5","3.0.2","0.49","1.8-4","2.3.10"]}]}]}
 </script>
 <!--/html_preserve-->
 
