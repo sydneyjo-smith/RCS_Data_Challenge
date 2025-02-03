@@ -232,14 +232,24 @@ heatmap_data <- plot_2_data %>%
 
 heatmap_data <- plot_2_data %>%
   group_by(audit_name_full, trust_name, metric_name, quarter_year) %>%
-  summarise(status = first(status)) %>%
-  mutate(status_num = case_when(
-    status == "Met Target" ~ 3,
-    status == "Within 2%" ~ 2,
-    status == "Below Target" ~ 1,
-    status == "Missing" ~ 0
-  )) %>%
-  select(-status)
+  summarise(status = first(status))
+
+heatmap_data <- heatmap_data %>%
+  mutate(
+    text = paste(
+      "Quarter year: ", quarter_year,
+      "\nStatus: ", status, sep="")
+  )
+
+unique_quarters <- plot_2_data %>%
+  group_by(date, quarter_year) %>%
+  summarise(date = first(date)) %>%
+  ungroup %>%
+  arrange(date)
+
+quarter_levels <- unique_quarters$quarter_year
+
+heatmap_data$quarter_year <- factor(heatmap_data$quarter_year, levels = quarter_levels)
 
 
 ############ Save prepared data ############
@@ -248,14 +258,14 @@ write.csv(heatmap_data, "data/processed_data/data_plot_2.csv", row.names = FALSE
 ############ Plotting ############
 
 # Define color mapping for ggplot
-color_mapping <- c("0" = "#999999", "1" = "#F8766D", "2" = "#FFD700", "3" = "#00BA38")
+color_mapping <- c("Missing" = "#999999", "Below Target" = "#F8766D", "Within 2%" = "#FFD700", "Met Target" = "#00BA38")
 
 heatmap_data_filtered <- heatmap_data %>%
   filter(trust_name == "Guy's and St Thomas' NHS Foundation Trust" & audit_name_full == "National Bowel Cancer Audit")
 
 # Create ggplot heatmap
-gg_heatmap <- ggplot(heatmap_data_filtered, aes(x = quarter_year, y = metric_name, fill = as.factor(status_num))) +
-  geom_tile(color = "black", size = 0.5) +  # Black gridlines for cell borders
+gg_heatmap <- ggplot(heatmap_data_filtered, aes(x = quarter_year, y = metric_name, fill = as.factor(status))) +
+  geom_tile(color = "azure2", size = 0.5) +  # Black gridlines for cell borders
   scale_fill_manual(values = color_mapping, name = "Status",
                     labels = c("Missing", "Below Target", "Within 2%", "Met Target")) +
   labs(title = "Data Quality Indicators Over Time", x = "Quarter-Year", y = "Metric Name") +
@@ -264,7 +274,7 @@ gg_heatmap <- ggplot(heatmap_data_filtered, aes(x = quarter_year, y = metric_nam
         legend.position = "bottom")
 
 # Convert to interactive plotly heatmap
-plotly_heatmap <- ggplotly(gg_heatmap, tooltip = "fill")
+plotly_heatmap <- ggplotly(gg_heatmap, tooltip = "text")
 
 # Display interactive heatmap
 plotly_heatmap
