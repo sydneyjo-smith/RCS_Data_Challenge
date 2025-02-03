@@ -45,7 +45,7 @@ plot_1_data_previous <- plot_1_data %>%
   # Join the previous quarter's value
   left_join(Data_Guys, select(audit, quarter_year, metric_name, pact, mav, mav_nat, mav_ca),
             by = c("audit" = "audit", "metric_name"="metric_name", "previous_quarter_year" = "quarter_year"), suffix = c("", "_prev")) %>%
-  select(audit, audit_name_full, trust_name, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
+  select(audit, audit_name_full, trust_name, trust_code, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
          mav_prev, mav_nat_prev, mav_ca_prev)
 
 
@@ -61,7 +61,7 @@ plot_1_data_previous<- plot_1_data_previous%>% mutate(variance=mav-mav_nat)%>%
   mutate(variance_prev_quarter=mav-mav_prev)
 
 # selecting columns for tables
-plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_name, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
+plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_name, quarter_year, trust_code, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
 
 
 #code to allocate header rows by RowType
@@ -103,6 +103,8 @@ table_1<-reactable(plot_1_data_filtered,
                   columns = list(
                     audit=colDef(show=FALSE),
                     trust_code=colDef(show=FALSE),
+                    trust_name=colDef(show=FALSE),
+                    quarter_year=colDef(show=FALSE),
                     audit_name_full = colDef(show=FALSE),
                     RowType = colDef(show = FALSE),
                     metric_name = colDef(
@@ -295,10 +297,10 @@ for (j in 1:n_cols) {
   for (i in 1:n_rows) {
     shapes[[length(shapes) + 1]] <- list(
       type = "rect",
-      x0 = j - 1.5,   
-      x1 = j - 0.5,   
-      y0 = i - 1.5,   
-      y1 = i - 0.5,   
+      x0 = j - 1.5,
+      x1 = j - 0.5,
+      y0 = i - 1.5,
+      y1 = i - 0.5,
       line = list(color = "black", width = 0.5),
       fillcolor = "transparent",
       xref = "x",
@@ -308,47 +310,47 @@ for (j in 1:n_cols) {
 }
 
 plotly_heatmap <- plot_ly(
-  x = colnames(heatmap_matrix),  
-  y = rownames(heatmap_matrix),  
-  z = heatmap_matrix,            
-  text = status_labels,          
+  x = colnames(heatmap_matrix),
+  y = rownames(heatmap_matrix),
+  z = heatmap_matrix,
+  text = status_labels,
   type = "heatmap",
-  colorscale = colorscale,       
-  zmin = 0,                      
-  zmax = 3,                      
+  colorscale = colorscale,
+  zmin = 0,
+  zmax = 3,
   colorbar = list(
-    tickvals = c(0, 1, 2, 3),  
-    ticktext = c("Missing", "Below Target", "Within 2%", "Met Target"),  
+    tickvals = c(0, 1, 2, 3),
+    ticktext = c("Missing", "Below Target", "Within 2%", "Met Target"),
     lenmode = "fraction",
     len = 0.75,
     thickness = 20,
-    ticklen = 5,               
-    ticks = "outside"          
+    ticklen = 5,
+    ticks = "outside"
   ),
   hovertemplate = paste(
     "<b>Quarter-Year:</b> %{x}<br>",
     "<b>Data Quality Indicator:</b> %{y}<br>",
-    "<b>Status:</b> %{text}<br>",  
-    "<extra></extra>"              
+    "<b>Status:</b> %{text}<br>",
+    "<extra></extra>"
   )
 ) %>%
   layout(
     title = "Data Quality Indicators Over Time",
     xaxis = list(
-      title = "Quarter-Year", 
-      tickangle = -45,           
-      showgrid = FALSE,          
-      type = "category"          
+      title = "Quarter-Year",
+      tickangle = -45,
+      showgrid = FALSE,
+      type = "category"
     ),
     yaxis = list(
-      title = "Metric Name", 
-      autorange = "reversed",    
-      showgrid = FALSE,          
-      type = "category"          
+      title = "Metric Name",
+      autorange = "reversed",
+      showgrid = FALSE,
+      type = "category"
     ),
-    plot_bgcolor = "white",      
-    paper_bgcolor = "white",     
-    shapes = shapes              
+    plot_bgcolor = "white",
+    paper_bgcolor = "white",
+    shapes = shapes
   )
 
 plotly_heatmap

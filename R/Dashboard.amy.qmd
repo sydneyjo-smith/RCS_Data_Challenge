@@ -44,24 +44,11 @@ selectInput('quarter_year', 'Select quarter', quarter_list)
 
 Plot 1: Quarterly summary table
 
-# Performance
-
-
-## {.sidebar width="25%"}
-```{r}
-selectInput('trust_name', 'Select hospital:', trust_list) 
-selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
-
-```
-
-## Row {.tabset}
 ```{r}
 reactableOutput("table_1")
 ```
 
-
 ```{r}
-
 #| context: server
 
 # Reactive dataset based on user input for Plot 3
@@ -74,8 +61,7 @@ plot_1_dataset <- reactive({
 ```
 
 ```{r}
-
-output$table_1 <- renderReactable({reactable(plot_1_dataset(),
+output$table_1<-renderReactable({reactable(plot_1_dataset(),
                   filterable = TRUE,
                   searchable = TRUE,
                   columns = list(
@@ -98,6 +84,20 @@ output$table_1 <- renderReactable({reactable(plot_1_dataset(),
                 )
              })
 ```
+```
+
+# Performance
+
+
+## {.sidebar width="25%"}
+```{r}
+selectInput('trust_name', 'Select hospital:', trust_list) 
+selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
+
+```
+
+## Row {.tabset}
+
 
 ### Data quality
 
