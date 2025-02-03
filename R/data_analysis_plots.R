@@ -1,6 +1,6 @@
 ################## Data analysis and plot
 
-library("readr")
+library(readr)
 library(dplyr)
 library(ggplot2)
 library(ggpattern)
@@ -9,6 +9,9 @@ library(tidyr)
 library(grid)
 library(reactable)
 library(tidyverse)
+library(lubridate)
+library(tibble)
+library(stringr)
 
 ########################## Load pre-processed data #############################
 
@@ -182,66 +185,27 @@ table_1
 
 #################################### PLOT 2  ####################################
 
-# Load necessary libraries
-library(dplyr)
-library(readxl)
-library(tidyr)
-library(plotly)
-library(lubridate)
-library(tibble)
-library(stringr)
+############ Data preparation ############
 
-# File path
-file_path <- "cancerdata_combined.xlsx"
-
-# Get sheet names
-sheet_names <- excel_sheets(file_path)
-
-# Read all sheets into a list
-data_list <- lapply(sheet_names, function(sheet) {
-  read_excel(file_path, sheet = sheet)
-})
-
-# Name the list elements by sheet names
-names(data_list) <- sheet_names
-
-# Access individual sheets
-data <- data_list[["Indicators_trust"]]
-data_qual <- data_list[["data_quality"]]
-data_qual_targets <- data_list[["data_quality_targets"]]
-
-# Combine data quality and targets
-quality_combined <- data_qual %>%
-  left_join(data_qual_targets, by = c("audit", "metric_name"))
-
-# Ensure pact values are in the correct range (0-1)
-quality_combined_vals <- quality_combined %>%
-  mutate(pact = if_else(pact > 1, pact / 100, pact))
-
-# Convert the 'date' column to Date type
-quality_combined_vals$date <- as.Date(quality_combined_vals$date, format = "%Y-%m-%d")
-
-# Create 'quarter_year' column in "Qn-YYYY" format
-quality_combined_vals <- quality_combined_vals %>%
-  mutate(quarter_year = paste0("Q", quarter(date), "-", format(date, "%Y")))
+plot_2_data <- data_quality
 
 # Step 1: Create a status column based on pact vs target
-quality_combined_vals <- quality_combined_vals %>%
+plot_2_data <- plot_2_data %>%
   mutate(status = case_when(
     is.na(pact) ~ "Missing",  # Grey for missing values
-    pact >= target ~ "Above Target",  # Green for above target
+    pact >= target ~ "Met Target",  # Green for above target
     pact >= (target - 0.02) ~ "Within 2%",  # Yellow for within 2% below target
     TRUE ~ "Below Target"  # Red for more than 2% below target
   ))
 
 # Step 2: Clean metric names and prepare heatmap data
-quality_combined_vals <- quality_combined_vals %>%
+plot_2_data <- plot_2_data %>%
   mutate(metric_name = str_remove(metric_name, "^Data completeness for ") %>%
            str_replace("^([a-zA-Z])", ~ toupper(.x)))
 
-heatmap_data <- quality_combined_vals %>%
-  filter(audit == "NAoPri", trust_code == "RJ1") %>%
-  group_by(metric_name, quarter_year) %>%
+
+heatmap_data <- plot_2_data %>%
+  group_by(audit_name_full, trust_name, metric_name, quarter_year) %>%
   summarise(status = ifelse(all(is.na(status)), "Missing", max(status, na.rm = TRUE)), .groups = "drop") %>%
   mutate(status_num = case_when(
     status == "Above Target" ~ 3,
@@ -250,109 +214,59 @@ heatmap_data <- quality_combined_vals %>%
     status == "Missing" ~ 0
   )) %>%
   select(-status) %>%
-  spread(key = quarter_year, value = status_num) %>%
-  column_to_rownames(var = "metric_name")
+  pivot_wider(
+    names_from = quarter_year,   # Convert quarter_year values into column names
+    values_from = status_num     # Fill new columns with status_num
+  )
 
-# Step 3: Ensure quarters are ordered chronologically
-sorted_quarters <- colnames(heatmap_data) %>%
-  str_extract("\\d{4}$") %>%
-  paste0("-", str_extract(colnames(heatmap_data), "Q\\d")) %>%
-  order()  # Get the correct order
+heatmap_data <- plot_2_data %>%
+  group_by(audit_name_full, trust_name, metric_name, quarter_year) %>%
+  summarise(status = ifelse(all(is.na(status)), "Missing", max(status, na.rm = TRUE)), .groups = "drop") %>%
+  mutate(status_num = case_when(
+    status == "Above Target" ~ 3,
+    status == "Within 2%" ~ 2,
+    status == "Below Target" ~ 1,
+    status == "Missing" ~ 0
+  )) %>%
+  select(-status)
 
-# Reorder the columns in heatmap_data
-heatmap_data <- heatmap_data[, order(match(colnames(heatmap_data), colnames(heatmap_data)[sorted_quarters]))]
+heatmap_data <- plot_2_data %>%
+  group_by(audit_name_full, trust_name, metric_name, quarter_year) %>%
+  summarise(status = first(status)) %>%
+  mutate(status_num = case_when(
+    status == "Met Target" ~ 3,
+    status == "Within 2%" ~ 2,
+    status == "Below Target" ~ 1,
+    status == "Missing" ~ 0
+  )) %>%
+  select(-status)
 
-# Step 4: Define color mapping
+
+############ Save prepared data ############
+write.csv(heatmap_data, "data/processed_data/data_plot_2.csv", row.names = FALSE,na = "")
+
+############ Plotting ############
+
+# Define color mapping for ggplot
 color_mapping <- c("0" = "#999999", "1" = "#F8766D", "2" = "#FFD700", "3" = "#00BA38")
 
-# Step 5: Create heatmap with plotly
+heatmap_data_filtered <- heatmap_data %>%
+  filter(trust_name == "Guy's and St Thomas' NHS Foundation Trust" & audit_name_full == "National Bowel Cancer Audit")
 
-# Convert heatmap_data to a matrix
-heatmap_matrix <- as.matrix(heatmap_data)
+# Create ggplot heatmap
+gg_heatmap <- ggplot(heatmap_data_filtered, aes(x = quarter_year, y = metric_name, fill = as.factor(status_num))) +
+  geom_tile(color = "black", size = 0.5) +  # Black gridlines for cell borders
+  scale_fill_manual(values = color_mapping, name = "Status",
+                    labels = c("Missing", "Below Target", "Within 2%", "Met Target")) +
+  labs(title = "Data Quality Indicators Over Time", x = "Quarter-Year", y = "Metric Name") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom")
 
-# Create a matrix of status labels corresponding to z values
-status_labels <- matrix(
-  c("Missing", "Below Target", "Within 2% of Meeting Target", "Met Target")[heatmap_matrix + 1], # +1 for R's 1-based indexing
-  nrow = nrow(heatmap_matrix),
-  ncol = ncol(heatmap_matrix)
-)
+# Convert to interactive plotly heatmap
+plotly_heatmap <- ggplotly(gg_heatmap, tooltip = "fill")
 
-# Define a discrete colorscale with four equal blocks
-colorscale <- list(
-  list(0.0, "#999999"),    # Grey: 0.0 to 0.25 (z = 0)
-  list(0.25, "#999999"),
-  list(0.25, "#F8766D"),   # Red: 0.25 to 0.5 (z = 1)
-  list(0.5, "#F8766D"),
-  list(0.5, "#FFD700"),    # Yellow: 0.5 to 0.75 (z = 2)
-  list(0.75, "#FFD700"),
-  list(0.75, "#00BA38"),   # Green: 0.75 to 1.0 (z = 3)
-  list(1.0, "#00BA38")
-)
-
-# Generate shapes for cell borders
-n_cols <- ncol(heatmap_matrix)
-n_rows <- nrow(heatmap_matrix)
-shapes <- list()
-for (j in 1:n_cols) {
-  for (i in 1:n_rows) {
-    shapes[[length(shapes) + 1]] <- list(
-      type = "rect",
-      x0 = j - 1.5,
-      x1 = j - 0.5,
-      y0 = i - 1.5,
-      y1 = i - 0.5,
-      line = list(color = "black", width = 0.5),
-      fillcolor = "transparent",
-      xref = "x",
-      yref = "y"
-    )
-  }
-}
-
-plotly_heatmap <- plot_ly(
-  x = colnames(heatmap_matrix),
-  y = rownames(heatmap_matrix),
-  z = heatmap_matrix,
-  text = status_labels,
-  type = "heatmap",
-  colorscale = colorscale,
-  zmin = 0,
-  zmax = 3,
-  colorbar = list(
-    tickvals = c(0, 1, 2, 3),
-    ticktext = c("Missing", "Below Target", "Within 2%", "Met Target"),
-    lenmode = "fraction",
-    len = 0.75,
-    thickness = 20,
-    ticklen = 5,
-    ticks = "outside"
-  ),
-  hovertemplate = paste(
-    "<b>Quarter-Year:</b> %{x}<br>",
-    "<b>Data Quality Indicator:</b> %{y}<br>",
-    "<b>Status:</b> %{text}<br>",
-    "<extra></extra>"
-  )
-) %>%
-  layout(
-    title = "Data Quality Indicators Over Time",
-    xaxis = list(
-      title = "Quarter-Year",
-      tickangle = -45,
-      showgrid = FALSE,
-      type = "category"
-    ),
-    yaxis = list(
-      title = "Metric Name",
-      autorange = "reversed",
-      showgrid = FALSE,
-      type = "category"
-    ),
-    plot_bgcolor = "white",
-    paper_bgcolor = "white",
-    shapes = shapes
-  )
-
+# Display interactive heatmap
 plotly_heatmap
 
 #################################### PLOT 3  ####################################
