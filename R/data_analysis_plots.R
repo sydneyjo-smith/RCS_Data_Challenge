@@ -233,12 +233,12 @@ quality_combined_vals <- quality_combined_vals %>%
   ))
 
 # Step 2: Clean metric names and prepare heatmap data
-# quality_combined_vals <- quality_combined_vals %>%
-#  mutate(metric_name = str_replace(metric_name, "Data completeness for ", ""))
+quality_combined_vals <- quality_combined_vals %>%
+  mutate(metric_name = str_remove(metric_name, "^Data completeness for ") %>%
+           str_replace("^([a-zA-Z])", ~ toupper(.x)))
 
-# Now we prepare the data for the heatmap
 heatmap_data <- quality_combined_vals %>%
-  filter(audit == "NBOCA", trust_code == "RJ1") %>%
+  filter(audit == "NAoPri", trust_code == "RJ1") %>%
   group_by(metric_name, quarter_year) %>%
   summarise(status = ifelse(all(is.na(status)), "Missing", max(status, na.rm = TRUE)), .groups = "drop") %>%
   mutate(status_num = case_when(
@@ -295,10 +295,10 @@ for (j in 1:n_cols) {
   for (i in 1:n_rows) {
     shapes[[length(shapes) + 1]] <- list(
       type = "rect",
-      x0 = j - 1.5,   # Left edge of cell (0-based index - 0.5)
-      x1 = j - 0.5,   # Right edge of cell (0-based index + 0.5)
-      y0 = i - 1.5,   # Bottom edge of cell (0-based index - 0.5)
-      y1 = i - 0.5,   # Top edge of cell (0-based index + 0.5)
+      x0 = j - 1.5,   
+      x1 = j - 0.5,   
+      y0 = i - 1.5,   
+      y1 = i - 0.5,   
       line = list(color = "black", width = 0.5),
       fillcolor = "transparent",
       xref = "x",
@@ -308,49 +308,49 @@ for (j in 1:n_cols) {
 }
 
 plotly_heatmap <- plot_ly(
-  x = colnames(heatmap_matrix),  # X-axis: Quarter-Year
-  y = rownames(heatmap_matrix),  # Y-axis: Metric Name
-  z = heatmap_matrix,            # Z-axis: Status values (0-3)
-  text = status_labels,          # Custom text for hover
+  x = colnames(heatmap_matrix),  
+  y = rownames(heatmap_matrix),  
+  z = heatmap_matrix,            
+  text = status_labels,          
   type = "heatmap",
-  colorscale = colorscale,       # Use the predefined discrete colorscale
-  zmin = 0,                      # Minimum z-value (0)
-  zmax = 3,                      # Maximum z-value (3)
+  colorscale = colorscale,       
+  zmin = 0,                      
+  zmax = 3,                      
   colorbar = list(
-    tickvals = c(0.125, 0.375, 0.625, 0.875),  # Midpoints of each color block
-    ticktext = c("Missing", "Below Target", "Within 2%", "Met Target"),
+    tickvals = c(0, 1, 2, 3),  
+    ticktext = c("Missing", "Below Target", "Within 2%", "Met Target"),  
     lenmode = "fraction",
     len = 0.75,
     thickness = 20,
-    ticklen = 0
+    ticklen = 5,               
+    ticks = "outside"          
   ),
   hovertemplate = paste(
     "<b>Quarter-Year:</b> %{x}<br>",
     "<b>Data Quality Indicator:</b> %{y}<br>",
-    "<b>Status:</b> %{text}<br>",
-    "<extra></extra>"
+    "<b>Status:</b> %{text}<br>",  
+    "<extra></extra>"              
   )
 ) %>%
   layout(
     title = "Data Quality Indicators Over Time",
     xaxis = list(
-      title = "Quarter-Year",
-      tickangle = -45,
-      showgrid = FALSE,          # Disable default grid lines
-      type = "category"          # Treat x-axis as categorical
+      title = "Quarter-Year", 
+      tickangle = -45,           
+      showgrid = FALSE,          
+      type = "category"          
     ),
     yaxis = list(
-      title = "Metric Name",
-      autorange = "reversed",    # Reverse y-axis
-      showgrid = FALSE,          # Disable default grid lines
-      type = "category"          # Treat y-axis as categorical
+      title = "Metric Name", 
+      autorange = "reversed",    
+      showgrid = FALSE,          
+      type = "category"          
     ),
-    plot_bgcolor = "white",
-    paper_bgcolor = "white",
-    shapes = shapes              # Add cell borders
+    plot_bgcolor = "white",      
+    paper_bgcolor = "white",     
+    shapes = shapes              
   )
 
-# Display the plotly heatmap
 plotly_heatmap
 
 #################################### PLOT 3  ####################################
