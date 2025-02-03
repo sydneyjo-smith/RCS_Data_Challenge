@@ -43,10 +43,14 @@ selectInput('quarter_year', 'Select quarter', quarter_list)
 ## Summary
 
 Plot 1: Quarterly summary table
+```{r}
+reactableOutput("table_1")
+```
+
 
 ```{r}
 #| context: server
-reactableOutput("table_1")
+
 
 
 # Reactive dataset based on user input for Plot 1
@@ -176,7 +180,7 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                 )
              })
 ```
-```
+
 
 # Performance
 
