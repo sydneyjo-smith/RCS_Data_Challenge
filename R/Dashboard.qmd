@@ -1,0 +1,102 @@
+---
+title: "Cancer services"
+format: dashboard
+server: shiny
+---
+
+
+```{r}
+#| context: setup
+library(ggplot2)
+library(readr)
+library(shiny)
+library(dplyr)
+library(tidyr)
+library(plotly)
+
+indicators_trust <- read_csv("data_long.csv")
+```
+
+# Summary table 
+
+
+
+
+# Performance
+
+## {.sidebar}
+```{r}
+trust_list <- unique(indicators_trust$trust_name)
+audit_list <- unique(indicators_trust$audit_name_full)
+quarter_list <- unique(indicators_trust$quarter_year)
+selectInput('trust_name', 'Select hospital:', trust_list) 
+selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
+
+```
+
+## Plot
+
+```{r}
+plotlyOutput('plot')
+```
+
+
+<!-- ## Data -->
+
+<!-- ```{r} -->
+<!-- tableOutput('data') -->
+<!-- ``` -->
+
+```{r}
+#| context: server
+
+# Reactive dataset based on user input
+dataset <- reactive({
+  req(input$trust_name, input$audit_name_full)  # Ensure inputs exist
+  
+  indicators_trust %>%
+    filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
+})
+ 
+
+# output$data <- renderTable({
+#   dataset()
+# })
+
+output$plot <- renderPlotly({
+  
+  # Line plot with ggplot2
+performance_plot <- ggplot(dataset(), aes(x = quarter_year, y = percentage, color = category, group = category, text=text)) +
+  geom_line(data = filter(dataset(), category == "Trust moving average"), size = 1, ) +  # Lines for ca_mav and na_mav
+  geom_line(data = filter(dataset(), category != "Trust moving average"), size = 1, linetype="dotted") +  # Lines for ca_mav and na_mav
+  geom_point(data = filter(dataset(), category == "Trust moving average"),
+             aes(size = denominator),
+             alpha = 0.8) +  # Points for mav, size based on denominator
+  scale_size_continuous(range = c(5, 10)) +  # Adjusts point size scale
+  geom_point(data = filter(dataset(), category == "Trust moving average" & is.na(denominator)),
+             shape = 21,  # Shape 21 allows color & fill customization
+             fill = "white",
+             color = "red",
+             stroke = 1,  # Controls border thickness
+             size = 4,
+             alpha = 1) +
+  theme_minimal() +
+  labs(title = "",
+       x = "Quarter year",
+       y = "Percentage",
+       color = "Category") +
+  scale_y_continuous(labels = scales::percent_format(scale = 100)) +  # Format as percentage
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) + # Rotate x-axis labels for readability
+  facet_wrap(~ metric_name, scales = "free_y",labeller = label_wrap_gen(55))  + # Creates a plot for each metric_name
+  theme(panel.spacing = unit(2, "lines"),legend.position="bottom")
+
+# Convert to an interactive plotly plot
+interactive_line_plot <- ggplotly(performance_plot, tooltip = "text")
+interactive_line_plot <- interactive_line_plot %>%
+  layout(legend = list(orientation = 'h'))
+interactive_line_plot
+
+  
+})
+
+```
