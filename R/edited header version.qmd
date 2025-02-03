@@ -24,7 +24,7 @@ library(tidyverse)
 # Loading in plot data
 indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
-plot1<-read_csv("../data/processed_data/plot1.csv")
+plot1<-read_csv("C:/Users/amylw.LAPTOP-05A0E1JC/Downloads/Github/RCS_Data_Challenge/data/processed_data/plot1.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
 audit_list <- unique(indicators_trust$audit_name_full)
