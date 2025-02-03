@@ -181,7 +181,19 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                                                         ))
                                                       }
                                                     }
-                                                  )
+                                                  ),
+                    rowStyle = function(index) {
+                            data <- plot_1_dataset()
+                          if (data[index, "RowType"] == "Header") { 
+                          return(list(
+                               background = "blue",
+                               color = "white",
+                               fontWeight = "bold"
+                                ))  
+                                } else {
+                                return(NULL)
+                               }
+                             } 
                   )
                 )
              })
