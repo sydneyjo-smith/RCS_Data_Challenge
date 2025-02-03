@@ -20,7 +20,7 @@ library(bsicons)
 
 
 # Loading in plot data
-indicators_trust <- read_csv("data_long.csv")
+indicators_trust <- read_csv("../data/processed_data/indicators_trust.csv")
 plot_3_data <- read_csv("../data/processed_data/data_plot_3.csv")
 
 trust_list <- unique(indicators_trust$trust_name)
@@ -74,7 +74,7 @@ plotlyOutput('plot_3')
 plot_3_dataset <- reactive({
   req(input$trust_name, input$audit_name_full)  # Ensure inputs exist
   
-  indicators_trust %>%
+  plot_3_data %>%
     filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
 })
  
