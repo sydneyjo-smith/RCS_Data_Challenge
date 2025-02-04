@@ -23,24 +23,24 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="Dashboard_files/libs/clipboard/clipboard.min.js"></script>
-<script src="Dashboard_files/libs/quarto-html/quarto.js"></script>
-<script src="Dashboard_files/libs/quarto-html/popper.min.js"></script>
-<script src="Dashboard_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="Dashboard_files/libs/quarto-html/anchor.min.js"></script>
-<link href="Dashboard_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="Dashboard_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="Dashboard_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="Dashboard_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="Dashboard_files/libs/bootstrap/bootstrap-582555cb6b95e03265be740e8280aa33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="Dashboard_files/libs/quarto-dashboard/quarto-dashboard.js"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/stickythead.js"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/datatables.min.js" kdttablesentinel="true"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/pdfmake.min.js" kdttablesentinel="true"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/vfs_fonts.js" kdttablesentinel="true"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/web-components.js" type="module"></script>
-<script src="Dashboard_files/libs/quarto-dashboard/components.js"></script>
-<link href="Dashboard_files/libs/quarto-dashboard/datatables.min.css" rel="stylesheet" kdttablesentinel="true">
+<script src="Dashboard-editamy_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-html/quarto.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-html/popper.min.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Dashboard-editamy_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Dashboard-editamy_files/libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Dashboard-editamy_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Dashboard-editamy_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Dashboard-editamy_files/libs/bootstrap/bootstrap-582555cb6b95e03265be740e8280aa33.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/quarto-dashboard.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/stickythead.js"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/datatables.min.js" kdttablesentinel="true"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/pdfmake.min.js" kdttablesentinel="true"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/vfs_fonts.js" kdttablesentinel="true"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/web-components.js" type="module"></script>
+<script src="Dashboard-editamy_files/libs/quarto-dashboard/components.js"></script>
+<link href="Dashboard-editamy_files/libs/quarto-dashboard/datatables.min.css" rel="stylesheet" kdttablesentinel="true">
 
 
 </head>
@@ -831,84 +831,55 @@ get_color_2 <- function(value, metric_type) {
   return("white")
 }
 
-output$table_1<-renderReactable({reactable(plot_1_dataset(),
-                  filterable = TRUE,
-                  searchable = TRUE,
-                  columns = list(
-                    audit=colDef(show=FALSE),
-                    trust_code=colDef(show=FALSE),
-                    trust_name=colDef(show=FALSE),
-                    quarter_year=colDef(show=FALSE),
-                    audit_name_full = colDef(show=FALSE),
-                    RowType = colDef(show = FALSE),
-                    metric_type = colDef(show = FALSE),
-                    metric_name = colDef(
-                      name = "Metric Name",
-                      cell = function(value, index) {
-                        data <- plot_1_dataset()
-                        if (data$RowType[index] == "Header") {
-                          return(data$audit_name_full[index])
-                        } else {
-                          return(value)
-                        }
-                      }
-                    ),
-                    denominator = colDef(name="Case Volume",
+output$table_1 <- renderReactable({
+  data <- plot_1_dataset()  # Store reactive dataset in a variable
+
+ reactable(
+    data,
+    filterable = TRUE,
+    searchable = TRUE,
+    columns = list(
+      audit=colDef(show=FALSE),
+      trust_code=colDef(show=FALSE),
+      trust_name=colDef(show=FALSE),
+      quarter_year=colDef(show=FALSE),
+      audit_name_full = colDef(show=FALSE),
+      RowType = colDef(show = FALSE),
+      metric_type = colDef(show = FALSE),
+      metric_name = colDef(
+        name = "Metric Name",
+        cell = function(value, index) {
+          if (data$RowType[index] == "Header") {  # Correct indexing
+            return(data$audit_name_full[index])  # Set header row
+          } else {
+            return(value)
+          }
+        }
+      ),
+       denominator = colDef(name="Case Volume",
                                          cell = function(value, index) {
-                                                    data <- plot_1_dataset()
-                                                    if (data[index, "RowType"] == "Header") {                                                                 return("")  # Blank for header rows
-                                                  } else {
-                                                 return(sprintf("%.0f", as.numeric(value)))
+                                      if (data$RowType[index] == "Header") {
+                                       return("")  # Blank for header rows
+                                        } else {
+                                    return(sprintf("%.0f", as.numeric(value)))
                                            }
                                          }
                                       ),
-                    mav = colDef(name = "Current Quarter Moving Average Performance (%)",
+      mav = colDef(name = "Current Quarter Moving Average Performance (%)",
                                   cell = function(value, index) {
-                                                    data <- plot_1_dataset()
-                                                    if (data[index, "RowType"] == "Header") {  # Correct indexing method
-                                                  return("")  # Blank for header rows
-                                                  } else {
-                                                 return(sprintf("%.0f%%", as.numeric(value)))
-
+                                      if (data$RowType[index] == "Header") {
+                                      return("")  # Blank for header rows
+                                      } else {
+                                  return(sprintf("%.0f%%", as.numeric(value)))
                                    }
                                   }
                                 ),
-                     variance = colDef(name="Comparison to National Performance (%)",
-                                      cell = function(value, index) {
-                                        data <- plot_1_dataset()
-                                        if (data[index, "RowType"] == "Header") {
-                                         return("")  # Empty cell for header rows
-                                        } else {
-                                        metric_type <- data[index, "metric_type"]
+    )
+  )
+}) 
 
-                                       color <- get_color_2(as.numeric(value), metric_type)  # Ensure numeric formatting
-                                      return(htmltools::div(
-                                             style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
-                                             round(as.numeric(value), 2)  # Round for better readability
-                                          ))
-                                        }
-                                      },
-                                         style = list(fontWeight = "bold")
-                    ),
-                    variance_prev_quarter = colDef( name="Comparison to Previous Quarter Performance (%)",
-                                                    cell = function(value, index) {
-                                                       data <- plot_1_dataset()
-                                                      if (data[index, "RowType"] == "Header") {
-                                                          return("")  # Empty cell for header rows
-                                                              } else {
-                                                       metric_type <- data[index, "metric_type"]
-                                                 color <- get_color_2(as.numeric(value), metric_type)
-                                                         return(htmltools::div(
-                                               style = paste("background-color:", color, "; padding: 8px; border-radius:                                                                  4px;"),
-                                                  round(as.numeric(value), 2) # Round for better readability
-                                                        ))
-                                                      }
-                                                    },
-                                         style = list(fontWeight = "bold")
-                                                  )
-                  )
-                )
-             })
+                   
+                    
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
