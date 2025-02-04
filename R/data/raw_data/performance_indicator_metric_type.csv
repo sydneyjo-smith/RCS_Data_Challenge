@@ -1,0 +1,38 @@
+audit,metric_name,metric_type
+NAoMe,People with newly diagnosed metastatic breast cancer discussed within a multidisciplinary team (MDT),1
+NAoPri,People receiving breast cancer surgery within 12 months of diagnosis,1
+NAoPri,People who have a record of having contact with a Clinical Nurse Specialist (CNS),1
+NAoPri,People recorded as having an immediate reconstruction following a mastectomy,1
+NBOCA,People with stage 3 colon cancer receiving adjuvant chemotherapy (unadjusted),1
+NBOCA,Seen by Clinical Nurse Specialist (unadjusted),1
+NBOCA,Unadjusted 30-day emergency readmission after major resection,0
+NBOCA,Unadjusted 30-day unplanned return to theatre after major resection,0
+NBOCA,Unadjusted 90-day mortality after major resection,0
+NBOCA,Unadjusted severe acute toxicity after adjuvant chemotherapy for stage 3 colon cancer,0
+NKCA,Percentage of people who receive treatment for kidney cancer that receive their first treatment within 31 days of decision to treat,1
+NKCA,Percentage of people who receive treatment for kidney cancer that receive their first treatment within 62 days of an urgent referral,1
+NNHLA,People discussed at a lymphoma/haematology MDT within four weeks of diagnosis (all),1
+NNHLA,People discussed at a lymphoma/haematology MDT within four weeks of diagnosis (high-grade),1
+NNHLA,People discussed at a lymphoma/haematology MDT within four weeks of diagnosis (low-grade),1
+NNHLA,People seen by a clinical nurse specialist (all),1
+NNHLA,People seen by a clinical nurse specialist (high-grade),1
+NNHLA,People seen by a clinical nurse specialist (low-grade),1
+NNHLA,People who started chemotherapy within 62 days of referral (high-grade),0
+NOCA,Emergency admissions prior to diagnosis,0
+NOCA,Receipt of any treatment (surgery and/or chemotherapy),0
+NOCA,Receipt of platinum-based chemotherapy,0
+NOCA,One-year survival,1
+NOCA,Two-year survival,1
+NOCA,One-year survival (case-mix adjusted),1
+NOCA,Two-year survival (case-mix adjusted),1
+NOGCA,Diagnosed with stage 4 disease,0
+NOGCA,Diagnosed within 28 days of urgent GP referral,1
+NOGCA,Disease-targeted treatment within 62 days of urgent GP referral,1
+NOGCA,Seen by a CNS around time of diagnosis,1
+NPaCA,Record of an MDT meeting,1
+NPaCA,Seen by a Clinical Nurse Specialist,1
+NPaCA,Diagnosed within 21 days of urgent GP referral,1
+NPaCA,Diagnosed within 28 days of urgent GP referral,1
+NPaCA,Treated within 62 days of urgent GP referral,1
+NPaCA,Received disease-targeted treatment (stage 1-3 at diagnosis),1
+NPaCA,Received disease-targeted treatment (stage 4 at diagnosis),1
