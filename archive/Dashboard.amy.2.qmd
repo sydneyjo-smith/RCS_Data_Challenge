@@ -42,24 +42,15 @@ selectInput('quarter_year', 'Select quarter', quarter_list)
 
 ## Summary
 
-Plot 1: Quarterly summary table
-
-# Performance
 
 
-## {.sidebar width="25%"}
 ```{r}
-selectInput('trust_name', 'Select hospital:', trust_list) 
-selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
-
-```
-
-## Row {.tabset}
-
 reactableOutput("table_1")
+```
 
 ```{r}
 #| context: server
+
 # Reactive dataset based on user input for Plot 1
 plot_1_dataset <- reactive({
   req(input$trust_name, input$quarter_year) 
@@ -181,7 +172,8 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                                                         ))
                                                       }
                                                     }
-                                                  ),
+                                                  )
+                    ),
                     rowStyle = function(index) {
                             data <- plot_1_dataset()
                           if (data[index, "RowType"] == "Header") { 
@@ -195,10 +187,19 @@ output$table_1<-renderReactable({reactable(plot_1_dataset(),
                                }
                              } 
                   )
-                )
              })
 ```
+# Performance
 
+## {.sidebar width="25%"}
+```{r}
+selectInput('trust_name', 'Select hospital:', trust_list) 
+selectInput('audit_name_full', 'Select Cancer Audit', audit_list) 
+
+```
+
+
+## Row {.tabset}
 ### Data quality
 
 ```{r}

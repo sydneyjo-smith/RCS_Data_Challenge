@@ -33,154 +33,329 @@ plot_1_data$quarter_year <- factor(plot_1_data$quarter_year,
                                    levels = quarter_levels,
                                    ordered = TRUE)
 
-plot_1_data_previous <- plot_1_data %>%
-  arrange(audit, metric_name, quarter_year)%>%
-  mutate(
-    # Split quarter_year into quarter and year
-    quarter = substr(quarter_year, 1, 2),
-    year = as.integer(substr(quarter_year, 4, 7)),
-    # Calculate the previous quarter and year
-    previous_quarter_year = case_when(
-      quarter == "Q1" ~ paste0("Q4-", year - 1), # For Q1, link to Q4 of the previous year
-      TRUE ~ paste0("Q", as.integer(substr(quarter, 2, 2)) - 1, "-", year) # For Q2-Q4
-    )
-  ) %>%
-  # Join the previous quarter's value
-  left_join(Data_Guys, select(audit, quarter_year, metric_name, pact, mav, mav_nat, mav_ca),
-            by = c("audit" = "audit", "metric_name"="metric_name", "previous_quarter_year" = "quarter_year"), suffix = c("", "_prev")) %>%
-  select(audit, audit_name_full, trust_name, trust_code, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
-         mav_prev, mav_nat_prev, mav_ca_prev)
+
+plot_1_data_unique <- plot_1_data %>%
+  group_by(audit, trust_code, quarter_year, metric_name) %>%
+  slice_head(n = 1) %>%  # Selects the first record in each group
+  ungroup()  # Remove grouping after selection
+
+plot_1_data_unique <- plot_1_data_unique %>%
+  mutate(quarter_order = match(quarter_year, quarter_levels))
 
 
-plot_1_data_previous<- plot_1_data_previous %>% mutate(mav=mav*100)%>%
-  mutate(mav_ca=mav_ca*100)%>%
-  mutate(mav_nat=mav_nat*100)%>%
-  mutate(mav_prev=mav_prev*100)%>%
-  mutate(mav_ca=mav_ca_prev*100)%>%
-  mutate(mav_nat=mav_nat_prev*100)
+plot_1_data_unique_prev <- plot_1_data_unique %>%
+  arrange(audit, trust_code, metric_name, quarter_year, quarter_order) %>%  # Ensure correct grouping & ordering
+  group_by(audit, trust_code, metric_name) %>%  # Group by specified columns
+  mutate(mav_prev = lag(mav, n = 1)) %>%  # Get previous quarter's mav within each group
+  ungroup()  # Ungroup to avoid unintended side effects
 
-# generating performance difference variables.
-plot_1_data_previous<- plot_1_data_previous%>% mutate(variance=mav-mav_nat)%>%
-  mutate(variance_prev_quarter=mav-mav_prev)
+plot_1_data_final <- plot_1_data_unique_prev %>%
+  mutate(variance_nat = mav-mav_nat,
+         variance_ca = mav-mav_ca,
+         variance_prev = mav-mav_prev)
 
-# selecting columns for tables
-plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_name, quarter_year, trust_code, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
+plot_1_data_final <- plot_1_data_final %>%
+  mutate(variance_nat = ifelse(metric_type == 0,variance_nat*-1,variance_nat),
+         variance_ca = ifelse(metric_type == 0,variance_ca*-1,variance_ca),
+         variance_prev = ifelse(metric_type == 0,variance_prev*-1,variance_prev))
+
+# plot_1_data_previous <- plot_1_data_unique %>%
+#   arrange(audit, metric_name, quarter_year)%>%
+#   mutate(
+#     # Split quarter_year into quarter and year
+#     quarter = substr(quarter_year, 1, 2),
+#     year = as.integer(substr(quarter_year, 4, 7)),
+#     # Calculate the previous quarter and year
+#     previous_quarter_year = case_when(
+#       quarter == "Q1" ~ paste0("Q4-", year - 1), # For Q1, link to Q4 of the previous year
+#       TRUE ~ paste0("Q", as.integer(substr(quarter, 2, 2)) - 1, "-", year) # For Q2-Q4
+#     )
+#   ) %>%
+#   # Join the previous quarter's value
+#   left_join(plot_1_data_unique, select(audit, quarter_year, metric_name, pact, mav, mav_nat, mav_ca),
+#             by = c("audit" = "audit", "metric_name"="metric_name", "previous_quarter_year" = "quarter_year"), suffix = c("", "_prev")) %>%
+#   select(audit, audit_name_full, trust_name, trust_code, date, quarter_year, metric_name, metric_type, denominator, mav, mav_ca, mav_nat, previous_quarter_year, denominator_prev,
+#          mav_prev, mav_nat_prev, mav_ca_prev)
+
+
+# plot_1_data_previous<- plot_1_data_previous %>% mutate(mav=mav*100)%>%
+#   mutate(mav_ca=mav_ca*100)%>%
+#   mutate(mav_nat=mav_nat*100)%>%
+#   mutate(mav_prev=mav_prev*100)%>%
+#   mutate(mav_ca=mav_ca_prev*100)%>%
+#   mutate(mav_nat=mav_nat_prev*100)
+
+# # generating performance difference variables.
+# plot_1_data_previous<- plot_1_data_previous%>% mutate(variance=mav-mav_nat)%>%
+#   mutate(variance_prev_quarter=mav-mav_prev)
+#
+# # selecting columns for tables
+# plot_1_data_previous<-plot_1_data_previous%>% select(audit, audit_name_full, trust_name, quarter_year, trust_code, metric_name, metric_type, denominator, mav,variance, variance_prev_quarter)
 
 
 #code to allocate header rows by RowType
-header_rows <- plot_1_data_previous %>%
-  distinct(audit_name_full) %>%
+header_rows <- plot_1_data_final %>%
+  distinct(audit_name_full, quarter_year, trust_name) %>%
   mutate(
     audit_name_full=audit_name_full,
-    metric_name = NA,
+    trust_name = trust_name,
+    quarter_year = quarter_year,
+    metric_name = audit_name_full,
     metric_type=NA,
     mav=NA,
     denominator=NA,
-    variance=NA,
-    variance_prev_quarter=NA,
+    variance_nat=NA,
+    variance_ca=NA,
+    variance_prev=NA,
     RowType = "Header"  # Column to differentiate header rows
   )
 
 
 # Add header rows to the dataset- generate the rest of variables as RowType=Data
-df_with_titles <- plot_1_data_previous %>%
+plot_1_data_final_titles <- plot_1_data_final %>%
   mutate(RowType = "Data") %>%
   bind_rows(header_rows) %>%
   mutate(RowType = factor(RowType, levels = c("Header", "Data")))%>%
   arrange(audit_name_full, RowType)  # Ensures audit headers appear before metrics
 
+plot_1_data_final_titles <- plot_1_data_final_titles %>%
+  select(audit, audit_name_full, trust_name, quarter_year, trust_code, metric_name, metric_type, denominator, mav, variance_prev, variance_ca, variance_nat, RowType)
+
 #########################save prepared data for plot1 ###############################
 
-write.csv(df_with_titles, "data/processed_data/plot1.csv", row.names = FALSE, na = "")
+write.csv(plot_1_data_final_titles, "data/processed_data/plot1.csv", row.names = FALSE, na = "")
 
 ################plotting plot 1 #########################################################
-plot_1_data_filtered <- df_with_titles %>%
-  filter(audit == 'NNHLA' &
-           trust_code == 'RJ1')
+plot_1_data_filtered <- plot_1_data_final_titles %>%
+  filter(trust_code == 'RCF' &
+           quarter_year == 'Q3-2021')
+
+#function for colour coding
+get_color_2 <- function(value, metric_type) {
+  if (is.na(value)) return("lightgrey")  # Default color for NA (gray)
+
+  # Define color scales (color-blind friendly)
+  red_palette <- hcl.colors(10, "Red-Blue", rev = TRUE)  # Light to dark red
+  green_palette <- hcl.colors(10, "TealGrn", rev = TRUE)
+
+  # Reverse logic if metric_type = 0
+  if (metric_type == 0) {
+    temp <- red_palette
+    red_palette <- green_palette
+    green_palette <- temp
+  }
+
+  # Compute the scaling for red (negative values)
+  if (value < 0) {
+    if (value >= -10) {
+      color_index <- 2  # Light orange for values between 0 and -10
+    } else if (value >= -20) {
+      color_index <- 6  # Medium orange for values between -10 and -20
+    } else {
+      color_index <- 10  # Dark orange for values less than -20
+    }
+    return(red_palette[color_index])  # Use red gradient with specified index
+  }
+
+  # Compute the scaling for green (positive values)
+  if (value > 0) {
+    if (value >= 10) {
+      color_index <- 2  # Light green for values between 0 and 10
+    } else if (value >= 20) {
+      color_index <- 6  # Medium green for values between -10 and 20
+    } else {
+      color_index <- 10  # Dark green for values less than 20
+    }
+    return(green_palette[color_index])
+  }
+
+  # Neutral color for 0
+  return("white")
+}
 
 # Display in reactable with styling
+orange_pal <- function(x) rgb(colorRamp(c("#ffe4cc", "#ff9500"))(x), maxColorValue = 255)
+positive_pal <- function(x) rgb(colorRamp(c("red","#ffffff", "green"))(x), maxColorValue = 255)
+negative_pal <- function(x) rgb(colorRamp(c("green","#ffffff", "red"))(x), maxColorValue = 255)
+blue_pal <- function(x) rgb(colorRamp(c("green","#ffffff", "red"))(x), maxColorValue = 255)
+
 
 table_1<-reactable(plot_1_data_filtered,
-                  filterable = TRUE,
-                  searchable = TRUE,
-                  columns = list(
-                    audit=colDef(show=FALSE),
-                    trust_code=colDef(show=FALSE),
-                    trust_name=colDef(show=FALSE),
-                    quarter_year=colDef(show=FALSE),
-                    audit_name_full = colDef(show=FALSE),
-                    RowType = colDef(show = FALSE),
-                    metric_name = colDef(
-                      name = "Metric Name",
-                      cell = function(value, index) {
-                        if (df_with_titles$RowType[index] == "Header") {
-                          return(df_with_titles$audit_name_full[index])
-                        } else {
-                          return(value)
-                        }
-                      }
-                    ),
-                    denominator = colDef(name="Case Volume",
-                                         cell = function(value, index) {
-                                           if (df_with_titles$RowType[index] == "Header") {
-                                             return("")
+                   defaultPageSize = 50,
+                   filterable = TRUE,
+                   searchable = TRUE,
+                   columns = list(
+                     audit=colDef(show=FALSE),
+                     trust_code=colDef(show=FALSE),
+                     trust_name=colDef(show=FALSE),
+                     quarter_year=colDef(show=FALSE),
+                     audit_name_full = colDef(show=FALSE),
+                     metric_type = colDef(show=TRUE),
+                     RowType = colDef(show=FALSE),
+                     metric_name = colDef(
+                       name = "Metric Name"),
+                     denominator = colDef(name="Case Volume"),
+                     mav = colDef(name = "Current Quarter Moving Average Performance (%)",
+                                  format = colFormat(percent = TRUE,digits = 0),
+                                  style = function(value, index) {
+                                    row_type <- plot_1_data_filtered[index, "RowType"]  # Get RowType
+
+                                    if (is.na(value)) {
+                                      if (row_type == "Header") {
+                                        return(list(background = "blue", color = "white"))  # Blue background for Header NA
+                                      } else {
+                                        return(list(background = "white", color = "black"))  # White background for non-Header NA
+                                      }
+                                    }
+
+                                    # Normal styling for non-NA values
+                                    normalized <- (value - 0) / (1 - 0)  # Adjust min/max as needed
+                                    normalized <- max(0, min(1, normalized))  # Clamp values
+                                    color <- orange_pal(normalized)
+                                    list(background = color)
+                                  }),
+                     variance_nat = colDef(name="Comparison to National Performance (%)",
+                                       format = colFormat(percent = TRUE,digits = 0),
+                                       style = function(value, index) {
+                                         row_type <- plot_1_data_filtered[index, "RowType"]  # Get RowType
+
+                                         if (is.na(value)) {
+                                           if (row_type == "Header") {
+                                             return(list(background = "blue", color = "white"))  # Blue background for Header NA
                                            } else {
-                                             return(sprintf("%.2f", value))
+                                             return(list(background = "white", color = "black"))  # White background for non-Header NA
                                            }
                                          }
-                    ),
-                    mav = colDef(name = "Current Quarter Moving Average Performance (%)",
-                                 cell = function(value, index) {
-                                   if (df_with_titles$RowType[index] == "Header") {
-                                     return("")
-                                   } else {
-                                     return(sprintf("%.2f", value))
-                                   }
-                                 }
-                    ),
-                    variance = colDef(name="Comparison to National Performance (%)",
-                                      cell = function(value, index) {
-                                        if (df_with_titles$RowType[index] == "Header") {
-                                          return("")  # Empty cell for header rows
-                                        } else {
-                                          metric_type <- df_with_titles$metric_type[index]
-                                          color <- get_color_2(value, metric_type)  # Apply color gradient function
-                                          return(div(
-                                            style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
-                                            round(value, 2)  # Round for better readability
-                                          ))
-                                        }
-                                      }
-                    ),
-                    variance_prev_quarter = colDef( name="Comparison to Previous Quarter Performance (%)",
-                                                    cell = function(value, index) {
-                                                      if (df_with_titles$RowType[index] == "Header") {
-                                                        return("")  # Empty cell for header rows
-                                                      } else {
-                                                        metric_type <- df_with_titles$metric_type[index]
-                                                        color <- get_color_2(value, metric_type)  # Apply color gradient function
-                                                        return(div(
-                                                          style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
-                                                          round(value, 2)  # Round for better readability
-                                                        ))
-                                                      }
-                                                    }
-                    )
-                  ),
-                  rowStyle = function(index) {
-                    if (df_with_titles$RowType[index] == "Header") {
-                      return(list(
-                        background = "blue",
-                        color = "white",
-                        fontWeight = "bold"
-                      ))  # Entire row is blue with white bold text
-                    } else {
-                      return(NULL)  # Default row style
-                    }
-                  }
+
+                                         # Normal styling for non-NA values
+                                         normalized <- (value - (-1)) / (1 - (-1))  # Adjust min/max as needed
+                                         normalized <- max(0, min(1, normalized))  # Clamp values
+                                         if (metric_type == 0){
+                                           color <- negative_pal(normalized)
+                                         }
+                                         else{
+                                           color <- positive_pal(normalized)
+                                         }
+                                         list(background = color)
+                                       }
+                     ),
+                     variance_prev = colDef( name="Comparison to Previous Quarter Performance (%)",
+                                                     format = colFormat(percent = TRUE,digits = 0),
+                                                     style = function(value, index) {
+                                                       row_type <- plot_1_data_filtered[index, "RowType"]  # Get RowType
+
+                                                       if (is.na(value)) {
+                                                         if (row_type == "Header") {
+                                                           return(list(background = "blue", color = "white"))  # Blue background for Header NA
+                                                         } else {
+                                                           return(list(background = "white", color = "black"))  # White background for non-Header NA
+                                                         }
+                                                       }
+
+                                                       # Normal styling for non-NA values
+                                                       normalized <- (value - (-1)) / (1 - (-1))  # Adjust min/max as needed
+                                                       normalized <- max(0, min(1, normalized))  # Clamp values
+                                                       color <- blue_pal(normalized)
+                                                       list(background = color)
+                                                     }
+                     )
+                   ),
+                   rowStyle = function(index) {
+                     if (plot_1_data_filtered$RowType[index] == "Header") {
+                       return(list(
+                         background = "blue",
+                         color = "white",
+                         fontWeight = "bold"
+                       ))  # Entire row is blue with white bold text
+                     } else {
+                       return(NULL)  # Default row style
+                     }
+                   }
 )
 
 table_1
+
+# table_1<-reactable(plot_1_data_filtered,
+#                   filterable = TRUE,
+#                   searchable = TRUE,
+#                   columns = list(
+#                     audit=colDef(show=FALSE),
+#                     trust_code=colDef(show=FALSE),
+#                     trust_name=colDef(show=FALSE),
+#                     quarter_year=colDef(show=FALSE),
+#                     audit_name_full = colDef(show=FALSE),
+#                     RowType = colDef(show = TRUE),
+#                     metric_name = colDef(
+#                       name = "Metric Name",
+#                       cell = function(value, index) {
+#                         if (df_with_titles$RowType[index] == "Header") {
+#                           return(df_with_titles$audit_name_full[index])
+#                         } else {
+#                           return(value)
+#                         }
+#                       }
+#                     ),
+#                     denominator = colDef(name="Case Volume",
+#                                          cell = function(value, index) {
+#                                            if (df_with_titles$RowType[index] == "Header") {
+#                                              return("")
+#                                            } else {
+#                                              return(sprintf("%.2f", value))
+#                                            }
+#                                          }
+#                     ),
+#                     mav = colDef(name = "Current Quarter Moving Average Performance (%)",
+#                                  cell = function(value, index) {
+#                                    if (df_with_titles$RowType[index] == "Header") {
+#                                      return("")
+#                                    } else {
+#                                      return(sprintf("%.2f", value))
+#                                    }
+#                                  }
+#                     ),
+#                     variance = colDef(name="Comparison to National Performance (%)",
+#                                       cell = function(value, index) {
+#                                         if (df_with_titles$RowType[index] == "Header") {
+#                                           return("")  # Empty cell for header rows
+#                                         } else {
+#                                           metric_type <- df_with_titles$metric_type[index]
+#                                           color <- get_color_2(value, metric_type)  # Apply color gradient function
+#                                           return(div(
+#                                             style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
+#                                             round(value, 2)  # Round for better readability
+#                                           ))
+#                                         }
+#                                       }
+#                     ),
+#                     variance_prev_quarter = colDef( name="Comparison to Previous Quarter Performance (%)",
+#                                                     cell = function(value, index) {
+#                                                       if (df_with_titles$RowType[index] == "Header") {
+#                                                         return("")  # Empty cell for header rows
+#                                                       } else {
+#                                                         metric_type <- df_with_titles$metric_type[index]
+#                                                         color <- get_color_2(value, metric_type)  # Apply color gradient function
+#                                                         return(div(
+#                                                           style = paste("background-color:", color, "; padding: 8px; border-radius: 4px;"),
+#                                                           round(value, 2)  # Round for better readability
+#                                                         ))
+#                                                       }
+#                                                     }
+#                     )
+#                   ),
+#                   rowStyle = function(index) {
+#                     if (df_with_titles$RowType[index] == "Header") {
+#                       return(list(
+#                         background = "blue",
+#                         color = "white",
+#                         fontWeight = "bold"
+#                       ))  # Entire row is blue with white bold text
+#                     } else {
+#                       return(NULL)  # Default row style
+#                     }
+#                   }
+# )
+
+
 
 
 #################################### PLOT 2  ####################################
@@ -269,6 +444,7 @@ gg_heatmap <- ggplot(heatmap_data_filtered, aes(x = quarter_year, y = metric_nam
   scale_fill_manual(values = color_mapping, name = "Status",
                     labels = c("Missing", "Below Target", "Within 2%", "Met Target")) +
   labs(title = "Data Quality Indicators Over Time", x = "Quarter-Year", y = "Metric Name") +
+  scale_y_discrete(labels = function(x) str_wrap(x, width = 30)) +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1),
         legend.position = "bottom")
@@ -320,6 +496,8 @@ plot_2_data_long <- plot_2_data_long %>%
                            labels = c("Trust moving average",
                                       "Cancer alliance moving average",
                                       "National moving average")))
+plot_2_data_long$quarter_year <- factor(plot_2_data_long$quarter_year, levels = quarter_levels)
+
 
 ############ Save prepared data ############
 
@@ -331,6 +509,8 @@ write.csv(plot_2_data_long, "data/processed_data/data_plot_3.csv", row.names = F
 plot_2_data_filtered <- plot_2_data_long %>%
   filter(audit == 'NNHLA' &
            trust_code == 'RJ1')
+
+plot_2_data_filtered$quarter_year <- factor(plot_2_data_filtered$quarter_year, levels = quarter_levels)
 
 # Line plot with ggplot2
 performance_plot <- ggplot(plot_2_data_filtered, aes(x = quarter_year, y = percentage, color = category, group = category, text=text)) +
