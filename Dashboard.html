@@ -839,7 +839,7 @@ plot1<-read_csv("data/processed_data/data_plot_1.csv")
 plot_2_data<-read_csv("data/processed_data/data_plot_2.csv")
 plot_3_data <- read_csv("data/processed_data/data_plot_3.csv")
 
-
+# Creating ordered list of quarter years for plot 2 and 3 data/plot 
 unique_quarters <- indicators_trust %>%
   group_by(date, quarter_year) %>%
   summarise(date = first(date)) %>%
@@ -847,9 +847,12 @@ unique_quarters <- indicators_trust %>%
   arrange(date)
 
 quarter_levels <- unique_quarters$quarter_year
-plot_3_data$quarter_year <- factor(plot_3_data$quarter_year, levels= quarter_levels )
-plot_2_data$quarter_year <- factor(plot_2_data$quarter_year, levels= quarter_levels )
 
+plot_2_data$quarter_year <- factor(plot_2_data$quarter_year, levels= quarter_levels )
+plot_3_data$quarter_year <- factor(plot_3_data$quarter_year, levels= quarter_levels )
+
+
+# Creating lists for use in dropdown selections on side bar
 trust_list <- unique(indicators_trust$trust_name)
 audit_list <- unique(indicators_trust$audit_name_full)
 quarter_list <- unique(indicators_trust$quarter_year)
@@ -861,39 +864,39 @@ decimal_list <- c(0,1,2)
 # Dynamic title based on user selection
 output$dynamic_title <- renderUI({
      req(input$trust_name, input$trust_name)  # Ensure inputs exist
-     # titlePanel(tags$h6(paste("Quarterly Summary -", input$trust_name, ",", input$quarter_year)))
-      tags$p(paste("Quarterly Summary (Moving average) -", input$trust_name, ",", input$quarter_year), style = "font-size: 20px;")
-
+      tags$p(paste("Quarterly Summary (Moving average) -", input$trust_name, ",", input$quarter_year), 
+             style = "font-size: 20px;")
 })
 
-# Reactive dataset based on user input for Plot 1
+# Reactive dataset based on user selection
 plot_1_dataset <- reactive({
   req(input$trust_name, input$trust_name)  # Ensure inputs exist
-
   plot1 %>%
     filter(trust_name == input$trust_name & quarter_year == input$quarter_year)
 })
 
-# Reactive dataset based on user input for Plot 1
+# Return colour palette based on user selection
 selected_palet <- reactive({
   req(input$palette_choice)  # Ensure inputs exist
   if(input$palette_choice == "Standard"){
       return (function(x) rgb(colorRamp(c("#E42A58","#ffffff", "#A2DA15"))(x), maxColorValue = 255))
-
   }else if (input$palette_choice == "Colour vision deficiency"){
       return (function(x) rgb(colorRamp(c("#5C87E4","#ffffff", "#ff9500"))(x), maxColorValue = 255))
   }
 })
 
+# Return decimal places based on user selection
 selected_decimal_places <- reactive({
   req(input$decimal_places)  # Ensure inputs exist
   return (as.numeric(input$decimal_places))
 })
 
-
+# Minimum and maximum values for the table colours - values outside of this 
+# range are held at the selected colour palette 
 min_val <- -0.25
 max_val <- 0.25
 
+# Create output table based on user selections
 output$table_1 <- renderReactable({
   data <- plot_1_dataset()  # Store reactive dataset in a variable
 
@@ -1000,15 +1003,14 @@ table_1
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-# Reactive dataset based on user input for Plot 3
+# Reactive dataset based on user selections
 plot_2_dataset <- reactive({
   req(input$trust_name, input$audit_name_full)  # Ensure inputs exist
-  
   plot_2_data %>%
     filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
 })
 
-# Reactive dataset based on user input for Plot 1
+# Colour palette dataset based on user user selections
 selected_palet_2 <- reactive({
   req(input$palette_choice)  # Ensure inputs exist
   if(input$palette_choice == "Standard"){
@@ -1019,6 +1021,7 @@ selected_palet_2 <- reactive({
   }
 })
 
+# Render plot 2 based on user selections
 output$plot_2 <- renderPlotly({
 
   # Define color mapping for ggplot
@@ -1047,19 +1050,14 @@ plotly_heatmap
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
-# Reactive dataset based on user input for Plot 3
+# Reactive dataset based on user selections
 plot_3_dataset <- reactive({
   req(input$trust_name, input$audit_name_full)  # Ensure inputs exist
-  
   plot_3_data %>%
     filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
 })
  
-
-# output$data <- renderTable({
-#   plot_1_dataset()
-# })
-
+# Render plot 3 based on user selections
 output$plot_3 <- renderPlotly({
   
   # Render Plot 3

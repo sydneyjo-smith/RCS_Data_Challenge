@@ -5,11 +5,11 @@ account: lshtm-rsc-data-challenge
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 13905395
-bundleId: 9749362
+bundleId: 9771828
 url: https://lshtm-rsc-data-challenge.shinyapps.io/Dashboard/
 version: 1
 quarto_version: 1.6.39
 quarto_engines: knitr
 asMultiple: FALSE
 asStatic: FALSE
-ignoredFiles: Data completeness polar area graph.R|Data_Completeness/data_description.R|Data_Completeness/missing_rows.R|Data_Completeness/missing_values.R|Data_Completeness/Old scripts/zach_data_quality.R|Data_Completeness/Old scripts/zach_indicators.R|Individual files
+ignoredFiles: Exploratory data analysis

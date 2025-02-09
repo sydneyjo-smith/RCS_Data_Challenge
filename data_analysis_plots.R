@@ -289,6 +289,7 @@ heatmap_data <- plot_2_data %>%
   summarise(status = first(status),
             pact= first(pact))
 
+# Add text column used by plotly
 heatmap_data <- heatmap_data %>%
   mutate(
     text = paste(
@@ -365,6 +366,7 @@ plot_3_data_long <- plot_3_data %>%
                names_to = "category",
                values_to = "percentage")
 
+# Add text column used by plotly
 plot_3_data_long <- plot_3_data_long %>%
   mutate(
     den_label = if_else(is.na(denominator),"Suppressed", as.character(denominator)),

@@ -39,7 +39,6 @@ indicators_trust <- indicators_trust %>%
 
 
 # date showing quarter_year (NOGCA, NPaCA)
-
 quarters <- indicators_trust %>%
   group_by(date, quarter_year) %>%
   summarise(date = first(date)) %>%
