@@ -360,8 +360,37 @@ plot_3_data$quarter_year <- factor(plot_3_data$quarter_year,
                             ordered = TRUE)
 
 
+
+
+# Use Wilson Score Confidence Interval due to small denominators
+
+# Function to calculate Wilson Score CI
+wilson_ci <- function(successes, n, conf_level = 0.95) {
+  if (n == 0 || is.na(n) || is.na(successes)) return(c(NA, NA))  # Handle cases where denominator is 0 or NA
+  z <- qnorm(1 - (1 - conf_level) / 2)
+  p_hat <- successes / n
+  denominator <- 1 + (z^2 / n)
+  center <- p_hat + (z^2 / (2 * n))
+  margin <- z * sqrt((p_hat * (1 - p_hat) / n) + (z^2 / (4 * n^2)))
+  lower <- (center - margin) / denominator
+  upper <- (center + margin) / denominator
+  return(c(lower, upper))
+}
+
+# Add lower and upper CI to the entire indicators_trust dataframe
+plot_3_data_ci <- plot_3_data %>%
+  arrange(date) %>%
+  mutate(
+    # quarter_year = paste0("Q", quarter(date), "-", year(date)),
+    # quarter_year = factor(quarter_year, levels = unique(quarter_year), ordered = TRUE),
+    # Calculate CI lower and upper bounds for all rows
+    CI_lower = mapply(function(x, y) wilson_ci(y * x, x)[1], denominator, pact),
+    CI_upper = mapply(function(x, y) wilson_ci(y * x, x)[2], denominator, pact)
+  )
+
+
 # Reshape the data to long format
-plot_3_data_long <- plot_3_data %>%
+plot_3_data_long <- plot_3_data_ci %>%
   pivot_longer(cols = c(mav, mav_ca, mav_nat),
                names_to = "category",
                values_to = "percentage")
@@ -370,7 +399,14 @@ plot_3_data_long <- plot_3_data %>%
 plot_3_data_long <- plot_3_data_long %>%
   mutate(
     den_label = if_else(is.na(denominator),"Suppressed", as.character(denominator)),
-    per_label = if_else(is.na(pact),"Suppressed", paste(as.character(round(pact*100, 2)), "%",sep="")),
+    per_label = if_else(is.na(pact),"Suppressed",
+                        paste(as.character(round(pact*100, 2)),
+                              "%",
+                              " (CI ",
+                              as.character(round(CI_lower*100, 0)),
+                              ", ",
+                              as.character(round(CI_upper*100, 0)),
+                              ")",sep="")),
     text = paste(
       "<b>",if_else(category == "mav", "Trust moving average", if_else(category == "mav_ca", "Cancer alliance moving average", "National moving average")), "</b>",
       "\nQuarter year: ", quarter_year,

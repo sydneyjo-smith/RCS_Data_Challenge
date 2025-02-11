@@ -19,6 +19,7 @@ library(bslib)
 library(bsicons)
 library(reactable)
 library(tidyverse)
+library(markdown)
 
 
 # Loading in plot data
@@ -46,6 +47,7 @@ audit_list <- unique(indicators_trust$audit_name_full)
 quarter_list <- unique(indicators_trust$quarter_year)
 palette_list <- c("Standard", "Colour vision deficiency")
 decimal_list <- c(0,1,2)
+marker_list <- c("Case Volume", "Wilson Score Confidence Interval")
 ```
 
 # Quarterly Summary 
@@ -95,7 +97,7 @@ reactableOutput("table_1")
 # Dynamic title based on user selection
 output$dynamic_title <- renderUI({
      req(input$trust_name, input$trust_name)  # Ensure inputs exist
-      tags$p(paste("Quarterly Summary (Moving average) -", input$trust_name, ",", input$quarter_year), 
+      tags$p(paste("Quarterly Performance Summary -", input$trust_name, ",", input$quarter_year), 
              style = "font-size: 20px;")
 })
 
@@ -149,12 +151,12 @@ output$table_1 <- renderReactable({
                                           style = function(value, index) {
                                           list(fontWeight = "bold", color="black")
                                   }),
-                     mav = colDef(name = "Current Quarter Performance (%)",
+                     mav = colDef(name = "Current Quarter Moving Average (%)",
                                   format = colFormat(percent = TRUE,digits = selected_decimal_places()),
                                   style = function(value, index) {
                                     list(fontWeight = "bold", color="black")
                                   }),
-                     variance_prev = colDef( name="Comparison to Previous Quarter Performance (%)",
+                     variance_prev = colDef( name="Comparison to Previous Quarter Moving Average (%)",
                                                      format = colFormat(percent = TRUE,digits = selected_decimal_places()),
                                                      style = function(value, index) {
                                                        row_type <- data[index, "RowType"]  # Get RowType
@@ -174,7 +176,7 @@ output$table_1 <- renderReactable({
                                                        list(background = color,fontWeight = "bold", color="black")
                                                      }
                      ),
-                     variance_ca = colDef( name="Comparison to Cancer Alliance Performance (%)",
+                     variance_ca = colDef( name="Comparison to Cancer Alliance Average (%)",
                                                      format = colFormat(percent = TRUE,digits = selected_decimal_places()),
                                                      style = function(value, index) {
                                                        row_type <- data[index, "RowType"]  # Get RowType
@@ -194,7 +196,7 @@ output$table_1 <- renderReactable({
                                                        list(background = color,fontWeight = "bold", color="black")
                                                      }
                      ),
-                     variance_nat = colDef(name="Comparison to National Performance (%)",
+                     variance_nat = colDef(name="Comparison to National Average (%)",
                                        format = colFormat(percent = TRUE,digits = selected_decimal_places()),
                                        style = function(value, index) {
                                          row_type <- data[index, "RowType"]  # Get RowType
@@ -242,7 +244,7 @@ table_1
 selectInput('trust_name', 'Select Hospital:', trust_list) 
 selectInput('audit_name_full', 'Select Cancer Audit:', audit_list) 
 selectInput('palette_choice', 'Select Colour Mode:', palette_list) 
-
+selectInput('marker_choice', 'Select Confidence Indicator:', marker_list) 
 ```
 
 ## Row {.tabset}
@@ -319,98 +321,152 @@ plot_3_dataset <- reactive({
   plot_3_data %>%
     filter(trust_name == input$trust_name & audit_name_full == input$audit_name_full)
 })
+
+# Return marker choice based on user selection
+selected_marker <- reactive({
+  req(input$marker_choice)  # Ensure inputs exist
+  return (input$marker_choice)
+})
  
-# Render plot 3 based on user selections
+
 output$plot_3 <- renderPlotly({
   
-  # Render Plot 3
-    performance_plot <- ggplot(plot_3_dataset(), 
-                           aes(x = quarter_year, y = percentage, 
-                               color = category, group = category, 
-                               linetype = category, text = text)) + 
-  geom_line(size = 1) +  
-  geom_point(data = filter(plot_3_dataset(), category == "Trust moving average"),
-             aes(size = denominator, color = category),
-             alpha = 0.8,
-             show.legend = FALSE) +  
-  scale_size_continuous(range = c(5, 10)) +  
-  geom_point(data = filter(plot_3_dataset(), category == "Trust moving average" & is.na(denominator)),
-             aes(color = category),
-             shape = 21,  
-             fill = "white",
-             stroke = 1,  
-             size = 4,
-             alpha = 1,
-             show.legend = FALSE) +
-  scale_color_manual(values = c("Trust moving average" = selected_palet_2()[1], 
-                                "Cancer alliance moving average" = selected_palet_2()[2],
-                                "National moving average" = selected_palet_2()[3])) +
-  scale_linetype_manual(values = c("Trust moving average" = "solid", 
-                                   "Cancer alliance moving average" = "dotted", 
-                                   "National moving average" = "dotted")) +
-  theme_minimal() +
-  labs(title = "Performance (Moving average) Across Quarter Years",
-       x = "",
-       y = "",
-       color = "") +
-  scale_y_continuous(labels = scales::percent_format(scale = 100), expand = expansion(mult = c(0.1, 0.1))) +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  facet_wrap(~ metric_name, scales = "free_y", labeller = label_wrap_gen(55), nrow = 3) + 
-  theme(panel.spacing = unit(0.5, "lines"),
-        plot.title = element_text(hjust= 0.5, margin = margin(b = 0)),
-        plot.margin = margin(t = 30, r = 10, b = 10, l = 10),
-        legend.position = "bottom") +
-  guides(color = guide_legend(nrow = 1), linetype = guide_legend(nrow = 1))  # Consolidates legend
+  dataset <- plot_3_dataset()
+  
+  # Base Plot
+  performance_plot <- ggplot(dataset, 
+                             aes(x = quarter_year, y = percentage, 
+                                 color = category, group = category, 
+                                 linetype = category, text = text)) + 
+    geom_line(size = 1) +  # Keeps all category lines, including "Trust moving average"
+    scale_color_manual(values = c("Trust moving average" = selected_palet_2()[1], 
+                                  "Cancer alliance moving average" = selected_palet_2()[2],
+                                  "National moving average" = selected_palet_2()[3])) +
+    scale_linetype_manual(values = c("Trust moving average" = "solid", 
+                                     "Cancer alliance moving average" = "dotted", 
+                                     "National moving average" = "dotted")) +
+    theme_minimal() +
+    labs(title = "Performance (%) Across Quarter Years",
+         x = "",
+         y = "",
+         color = "") +
+    scale_y_continuous(labels = scales::percent_format(scale = 100), expand = expansion(mult = c(0.1, 0.1))) +
+    theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+    facet_wrap(~ metric_name, scales = "free_y", labeller = label_wrap_gen(55), nrow = 3) + 
+    theme(panel.spacing = unit(0.5, "lines"),
+          plot.title = element_text(hjust= 0.5, margin = margin(b = 0)),
+          plot.margin = margin(t = 30, r = 10, b = 10, l = 10),
+          legend.position = "bottom") +
+    guides(color = guide_legend(nrow = 1), linetype = guide_legend(nrow = 1))  
 
-# Convert to an interactive plotly plot
-interactive_line_plot <- ggplotly(performance_plot, tooltip = "text") %>%
-  layout(
-    legend = list(
-      orientation = "h",  # Horizontal legend
-      x = 0.5,  # Centers legend horizontally
-      xanchor = "center",  # Ensures legend is anchored at its center
-      y = -0.2  # Moves legend below the plot; adjust as needed
+  # Conditional Adjustments
+  if (input$marker_choice == "Case Volume") {
+    performance_plot <- performance_plot +
+      geom_point(data = filter(dataset, category == "Trust moving average"),
+                 aes(y = pact, size = denominator, color = category),
+                 alpha = 0.8,
+                 show.legend = FALSE) +
+      scale_size_continuous(range = c(5, 10)) +
+      geom_point(data = filter(dataset, category == "Trust moving average" & is.na(denominator)),
+                 aes(color = category),
+                 shape = 21,  
+                 fill = "white",
+                 stroke = 1,  
+                 size = 4,
+                 alpha = 1,
+                 show.legend = FALSE)
+  } else if (input$marker_choice == "Wilson Score Confidence Interval"){
+    performance_plot <- performance_plot + 
+      # Add "pact" points
+      geom_point(data = filter(dataset, category == "Trust moving average"),
+                 aes(y = pact, color = category),
+                 shape = 18,
+                 size = 3,
+                 show.legend = FALSE) +
+
+      # Add confidence intervals
+      geom_errorbar(data = filter(dataset, category == "Trust moving average"),
+                    aes(ymin = CI_lower, ymax = CI_upper, color = category),
+                    width = 0.2,
+                    show.legend = FALSE) +
+      
+      # Show missing denominator points
+      geom_point(data = filter(dataset, category == "Trust moving average" & is.na(denominator)),
+                 aes(color = category),
+                 shape = 21,  
+                 fill = "white",
+                 stroke = 1,  
+                 size = 4,
+                 alpha = 1,
+                 show.legend = FALSE) 
+      
+  }
+
+  # Convert to an interactive plotly plot
+  interactive_line_plot <- ggplotly(performance_plot, tooltip = "text") %>%
+    layout(
+      legend = list(
+        orientation = "h",  
+        x = 0.5,  
+        xanchor = "center",  
+        y = -0.2  
+      )
     )
-  )
 
-interactive_line_plot
+  interactive_line_plot
 })
 
+
 ```
 
-# Hospital summary
+# Dashboard Instructions
 
+## Row {.tabset}
 
-## {.sidebar width="25%"}
+### Overview
+
 ```{r}
-selectInput('trust_name', 'Select hospital:', trust_list) 
+#| context: server
+
+output$markdown_overall <- renderUI({
+  includeMarkdown("instructions_overall.md")
+})
 ```
 
-## Collumn
-### Row 1
-Average Quarterly Case loads
-
-### Row 2
 ```{r}
 
-value_box(
-  title = "Trust average",
-  value = "23 /qtr",
-  showcase = bsicons::bs_icon("hospital"),
-  theme = "primary"
-)
-value_box(
-  title = "Cancer alliance average",
-  value = "34 /qtr",
-  showcase = bsicons::bs_icon("geo-alt"),
-  theme = "secondary"
-)
-value_box(
-  title = "National average",
-  value = "23 /qtr",
-  showcase = bsicons::bs_icon("globe"),
-  theme = "secondary"
-)
+uiOutput("markdown_overall")
 
 ```
-### Row 2
+
+### Quarterly Summary
+
+```{r}
+#| context: server
+
+output$markdown_quarterly_summary <- renderUI({
+  includeMarkdown("instructions_summary.md")
+})
+```
+
+```{r}
+
+uiOutput("markdown_quarterly_summary")
+
+```
+
+### Performance
+```{r}
+#| context: server
+
+output$markdown_performance <- renderUI({
+  includeMarkdown("instructions_performance.md")
+})
+```
+
+
+```{r}
+
+uiOutput("markdown_performance")
+
+```
