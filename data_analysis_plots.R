@@ -117,49 +117,6 @@ write.csv(plot_1_data_final_titles, "data/processed_data/data_plot_1.csv", row.n
 #   filter(trust_code == 'RCF' &
 #            quarter_year == 'Q3-2021')
 #
-# #function for colour coding
-# get_color_2 <- function(value, metric_type) {
-#   if (is.na(value)) return("lightgrey")  # Default color for NA (gray)
-#
-#   # Define color scales (color-blind friendly)
-#   red_palette <- hcl.colors(10, "Red-Blue", rev = TRUE)  # Light to dark red
-#   green_palette <- hcl.colors(10, "TealGrn", rev = TRUE)
-#
-#   # Reverse logic if metric_type = 0
-#   if (metric_type == 0) {
-#     temp <- red_palette
-#     red_palette <- green_palette
-#     green_palette <- temp
-#   }
-#
-#   # Compute the scaling for red (negative values)
-#   if (value < 0) {
-#     if (value >= -10) {
-#       color_index <- 2  # Light orange for values between 0 and -10
-#     } else if (value >= -20) {
-#       color_index <- 6  # Medium orange for values between -10 and -20
-#     } else {
-#       color_index <- 10  # Dark orange for values less than -20
-#     }
-#     return(red_palette[color_index])  # Use red gradient with specified index
-#   }
-#
-#   # Compute the scaling for green (positive values)
-#   if (value > 0) {
-#     if (value >= 10) {
-#       color_index <- 2  # Light green for values between 0 and 10
-#     } else if (value >= 20) {
-#       color_index <- 6  # Medium green for values between -10 and 20
-#     } else {
-#       color_index <- 10  # Dark green for values less than 20
-#     }
-#     return(green_palette[color_index])
-#   }
-#
-#   # Neutral color for 0
-#   return("white")
-# }
-#
 # # Display in reactable with styling
 # orange_pal <- function(x) rgb(colorRamp(c("#ffe4cc", "#ff9500"))(x), maxColorValue = 255)
 # positive_pal <- function(x) rgb(colorRamp(c("red","#ffffff", "green"))(x), maxColorValue = 255)

@@ -14,7 +14,7 @@ This page provides a high-level summary of the moving average performance indica
 
 -   **Select Colour Mode:** Switch between standard (default) and colour vision deficiency mode. This will update the colour gradients used in the table cells.
 
--   Select Decimal Places: Switch between 0 (default),1,2 decimal places to be displayed in table cells.
+-   **Select Decimal Places:** Switch between 0 (default),1,2 decimal places to be displayed in table cells.
 
 #### Description of features
 

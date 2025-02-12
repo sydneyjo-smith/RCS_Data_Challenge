@@ -18,8 +18,6 @@ Trust outcomes are reported by the trust/hospital/MDT on a quarterly basis, with
 
 Both Performance Metrics (measuring key treatment metrics) and data quality (measuring the completeness of the data reported by the service provider) are recorded. For more detail around these metrics, please visit the [NATCAN website](https://www.nboca.org.uk/trust-results/explanatory-notes/2021-2022/).
 
-Risk adjustment is performed using the seven Data Quality metrics provided below, as well as mode of admission (elective/emergency) and number of co-morbidities according to HES/PEDW, and an interaction between age
-
 ## **List of Cancer Audits and individual dashboards**
 
 |  |  |
@@ -45,7 +43,5 @@ Risk adjustment is performed using the seven Data Quality metrics provided below
 -   **Performance Metric**: Metrics Selected from the 2024 State of the Nation report that report on the patterns of key performance indicators in the delivery of cancer services at NHS organisations. 
 
 -   **Data Quality:** refers to the completeness of data available on people with cancer at individual NHS organisations 
-
--   **Confidence limits**:
 
 -   **Moving Average:** calculated as an average of performance metric or data quality over three consecutive quarters. Within this data set, the moving average encompasses the quarter selected, the previous quarter, and the following quarter. 
